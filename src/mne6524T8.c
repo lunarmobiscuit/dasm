@@ -107,5 +107,6 @@ MNEMONIC Mne6524T8[] = {
     { NULL, v_mnemonic, "r24", 0, AF_IMP, { 0x2f } },   /* 24-bit registers */
     { NULL, v_mnemonic, "w16", 0, AF_IMP, { 0x5f } },   /* 24-bit address & 16-bit registers */
     { NULL, v_mnemonic, "w24", 0, AF_IMP, { 0x6f } },   /* 24-bit address & 24-bit registers */
+    { NULL, v_mnemonic, "sws", 0, AF_IMP, { 0xfc } },   /* Set the stack width based on rNN prefix */
     MNEMONIC_NULL
 };
