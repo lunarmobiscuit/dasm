@@ -1,0 +1,3 @@
+
+recursive_macro2.asm (16): error: Recursion too deep in  macro [m1_noend] recursion > 32
+

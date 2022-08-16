@@ -1,0 +1,16 @@
+------- FILE incbin.asm LEVEL 1 PASS 1
+      1  0000 ????						; Test case for the INCBIN pseudo-op
+      2  0000 ????
+      3  0000 ????	       2e 62 69 6e fname      =	"incbinexample1.bin"
+      4  0000 ????
+      5  0000 ????				      PROCESSOR	6502
+      6  c000					      ORG	$C000
+      7  c000							; Regression test - see if it works as it used to
+      8  c000					      INCBIN	"incbinexample1.bin"
+      9  c000		       00		      DC.B	0
+     10  c001							; Skip first two bytes
+     11  c001					      INCBIN	fname, 2
+     12  c001		       00		      DC.B	0
+     13  c002							; Number bigger than file length - include nothing
+     14  c002					      INCBIN	fname, 100
+     15  c002		       00		      DC.B	0

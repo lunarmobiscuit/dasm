@@ -1,0 +1,5 @@
+68908_SP16b.asm (4): error: Value in 'ldx 500,SP, user requested byte mode' must be <$100.
+68908_SP16b.asm (4): error: Value in 'ldx 500,SP' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

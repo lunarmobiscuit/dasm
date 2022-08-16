@@ -1,0 +1,6 @@
+PC: 0000  MNEMONIC: sta  addrmode: 16  mnemask: 000019d8 adrmode: 4  Cvt[am]: 7   Mnext:4   value: 256
+final addrmode = 4, opsize:2 Opsize[4]:1
+stabx.asm (10): error: Value in 'sta RESP1,x, user requested byte mode' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

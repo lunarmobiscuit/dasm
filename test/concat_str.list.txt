@@ -1,0 +1,23 @@
+------- FILE concat_str.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      PROCESSOR	6502
+      3  0000 ????
+      4  0000					      ORG	0
+      5  0000
+      6  0000					      .macro	concat_str
+      7  0000				   {1}	      .set	str_var
+      8  0000				   str_var    .set	({1}{2})
+      9  0000					      .endm		; {name},{size}
+     10  0000
+     11  0000				   str_var    .set	""
+     12  0000
+      0  0000					      concat_str	_1 "A"
+concat_str.asm (13): error: Unknown Mnemonic '"A"'.
+      1  0000				   _1	      "A"	.set str_var
+concat_str.asm (13): error: Not enough args passed to Macro.
+concat_str.asm (13): error: Illegal character '{2}'.
+char = '{' code 123
+concat_str.asm (13): error: Illegal character '}'.
+char = '}' code 125
+concat_str.asm (13): error: Internal error in operator function table
+Aborting assembly

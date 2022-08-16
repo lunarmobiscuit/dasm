@@ -1,0 +1,9 @@
+char = '{' 123 (-1: 34)
+char = '}' 125 (-1: 50)
+
+concat_str.asm (13): error: Unknown Mnemonic '"A"'.
+concat_str.asm (13): error: Not enough args passed to Macro.
+concat_str.asm (13): error: Illegal character '{2}'.
+concat_str.asm (13): error: Illegal character '}'.
+concat_str.asm (13): error: Internal error in operator function table
+

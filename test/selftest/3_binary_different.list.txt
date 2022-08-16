@@ -1,0 +1,8 @@
+------- FILE selftest/3_binary_different.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000					      .ORG
+      3  0000
+      4  0000		       04 d2		      DC.w	1234
+      5  0002							;
+      6  0002							; everything OK here, testing the test-enginge for different binary reference
+      7  0002

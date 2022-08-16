@@ -1,0 +1,6 @@
+PC: 0000  MNEMONIC: lda  addrmode: 1  mnemask: 000019da adrmode: 1  Cvt[am]: 2   Mnext:3   value: -256
+final addrmode = 3, opsize:1 Opsize[3]:1
+negative256_2.asm (14): error: Value in 'negative lda #-256' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

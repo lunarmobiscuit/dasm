@@ -1,0 +1,10 @@
+Warning: Unable to open 'vcs.h'
+Warning: Unable to open 'vcs.h'
+--- Unresolved Symbol List
+vcs.h                    0000 ????         (R )
+0.error                  0000 ????         (R )
+--- 2 Unresolved Symbols
+
+
+
+Fatal assembly error: Source is not resolvable.

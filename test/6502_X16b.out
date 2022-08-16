@@ -1,0 +1,6 @@
+PC: 0000  MNEMONIC: rol  addrmode: 16  mnemask: 000000d9 adrmode: 4  Cvt[am]: 7   Mnext:3   value: 320
+final addrmode = 4, opsize:2 Opsize[4]:1
+6502_X16b.asm (9): error: Value in 'rol addr_offs,X, user requested byte mode' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

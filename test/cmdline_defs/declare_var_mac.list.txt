@@ -1,0 +1,46 @@
+------- FILE cmdline_defs/declare_var_mac.asm LEVEL 1 PASS 1
+      1  0000 ????						;
+      2  0000 ????						; the purpose of this macro is to declare a global variable without need to know its exact location
+      3  0000 ????						; the location is automatically derived from its predecessor 'next_var' which gets redefined at every
+      4  0000 ????						; occurence. This way one can copy-paste, comment-out or conditional-define variable declarations
+      5  0000 ????						; without worrying. Memory usage will be always as compact as possible
+      6  0000 ????						;
+      7  0000 ????				      .PROCESSOR	6803
+      8  0000 ????
+      9  0000 ????			  -	      ifnconst	RAM_START
+     10  0000 ????			  -RAM_START  .EQU	0x80
+     11  0000 ????				      endif
+     12  0000 ????
+     13  0000 ????				      .mac	declare_var
+     14  0000 ????			   {1}	      .EQU	next_var
+     15  0000 ????			   next_var   .set	({1}+{2})
+     16  0000 ????				      .endm		; {name},{size}
+     17  0000 ????
+     18  0000 ????			   next_var   .set	RAM_START
+     19  0000 ????
+      0  0000 ????				      declare_var	first, 1	; declare variable name "first" 8bit
+      1  0000 ????	       00 60	   first      .EQU	next_var
+      2  0000 ????			   next_var   .set	(first+1)
+      0  0000 ????				      declare_var	second, 2	; declare variable name "second" 16bit
+      1  0000 ????	       00 61	   second     .EQU	next_var
+      2  0000 ????			   next_var   .set	(second+2)
+     22  0000 ????				      if	(RAM_START == 0x60)
+      0  0000 ????				      declare_var	extra, 3	; in case of special define, include variable extra 24bit
+      1  0000 ????	       00 63	   extra      .EQU	next_var
+      2  0000 ????			   next_var   .set	(extra+3)
+     24  0000 ????				      endif
+      0  0000 ????				      declare_var	third, 4	; declare variable name "third" 32bit
+      1  0000 ????	       00 66	   third      .EQU	next_var
+      2  0000 ????			   next_var   .set	(third+4)
+     26  0000 ????
+     27  8000					      .ORG	0x8000
+     28  8000
+     29  8000				   example_code
+     30  8000		       ce 00 66 	      ldx	#third
+     31  8003		       35		      txs
+     32  8004		       96 60		      ldaa	first
+     33  8006		       a7 00		      staa	,X
+     34  8008					      if	(RAM_START == 0x60)
+     35  8008		       b7 00 63 	      staa.w	extra
+     36  800b					      endif
+     37  800b

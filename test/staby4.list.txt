@@ -1,0 +1,52 @@
+------- FILE staby4.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .TRACE	on
+      3  0000 ????
+      4  0000 ????				      .processor	6502
+      5  0000 ????
+      6  0000 ????	       01 00	   RESP1      =	$100
+      7  0000 ????
+      8  0000					      .ORG	0
+      9  0000
+staby4.asm (10): error: Illegal forced Addressing mode on 'sta'.
+     10  0000					      sta.by	RESP1,y	; wrong statement   forced(byteaddr_Y)   but  implied(wordaddr_Y)
+     11  0000
+     12  0000
+     13  0000
+     14  0000
+     15  0000
+     16  0000
+     17  0000
+     18  0000
+     19  0000
+     20  0000
+     21  0000
+     22  0000
+     23  0000
+     24  0000
+------- FILE staby4.asm LEVEL 1 PASS 2
+      1  0000 ????
+      2  0000 ????				      .TRACE	on
+      3  0000 ????
+      4  0000 ????				      .processor	6502
+      5  0000 ????
+      6  0000 ????	       01 00	   RESP1      =	$100
+      7  0000 ????
+      8  0000					      .ORG	0
+      9  0000
+staby4.asm (10): error: Illegal forced Addressing mode on 'sta'.
+     10  0000					      sta.by	RESP1,y	; wrong statement   forced(byteaddr_Y)   but  implied(wordaddr_Y)
+     11  0000
+     12  0000
+     13  0000
+     14  0000
+     15  0000
+     16  0000
+     17  0000
+     18  0000
+     19  0000
+     20  0000
+     21  0000
+     22  0000
+     23  0000
+     24  0000

@@ -1,0 +1,7 @@
+------- FILE segfault.asm LEVEL 1 PASS 1
+      1  0000 ????						;   segfault
+      2  0000 ????
+      3  0000 ????			   str	      set	""
+      4  0000 ????			   str	      eqm	str + "\nAAAAA"
+segfault.asm (5): error: Recursion too deep in pushsymbol()
+Aborting assembly

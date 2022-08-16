@@ -1,0 +1,9 @@
+------- FILE 68908_SP16b.asm LEVEL 1 PASS 1
+      1  0000					      .processor	68hc908
+      2  0000					      .org	0
+      3  0000
+68908_SP16b.asm (4): error: Value in 'ldx 500,SP, user requested byte mode' must be <$100.
+68908_SP16b.asm (4): error: Value in 'ldx 500,SP' must be <$100.
+      4  0000		       9e ee f4 	      ldx.b	500,SP	; should trigger since the user requested byte mode but size is word
+      5  0003
+      6  0003

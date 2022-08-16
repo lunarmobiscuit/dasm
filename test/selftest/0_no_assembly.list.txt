@@ -1,0 +1,5 @@
+------- FILE selftest/0_no_assembly.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????
+selftest/0_no_assembly.asm (3): error: Processor 'fantasy' not supported.
+Aborting assembly

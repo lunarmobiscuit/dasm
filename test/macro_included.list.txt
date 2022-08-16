@@ -1,0 +1,12 @@
+------- FILE macro_included.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .PROCESSOR	6502
+      3  0000 ????
+------- FILE macro_ipart0.asm LEVEL 2 PASS 1
+      0  0000 ????				      include	"macro_ipart0.asm"	;/* head  declaration *
+      1  0000 ????
+      2  0000 ????				      .MACRO	headpart
+      3  0000 ????				      lda	#1
+      4  0000 ????
+macro_ipart0.asm (4): error: Premature EOF.
+Aborting assembly

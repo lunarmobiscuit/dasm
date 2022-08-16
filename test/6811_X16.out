@@ -1,0 +1,4 @@
+6811_X16.asm (4): error: Value in 'adda 500,X' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

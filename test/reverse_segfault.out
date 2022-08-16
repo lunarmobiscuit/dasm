@@ -1,0 +1,3 @@
+doop: error: operator index(32) > MAXOPS(32), probably too deep recursion
+reverse_segfault.asm (7): error: Recursion too deep in doop()
+

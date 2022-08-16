@@ -1,0 +1,4 @@
+68908_dbnz_SP16.asm (4): error: Value in 'dbnz 400,SP,backLoop' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

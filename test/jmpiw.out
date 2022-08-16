@@ -1,0 +1,12 @@
+PC: 0004  MNEMONIC: jmp  addrmode: 3  mnemask: 00002040 adrmode: 6  Cvt[am]: 9   Mnext:-1   value: 16
+final addrmode = 6, opsize:1 Opsize[6]:2
+PC: 0007  MNEMONIC: jmp  addrmode: 3  mnemask: 00002040 adrmode: 6  Cvt[am]: 9   Mnext:-1   value: 256
+final addrmode = 6, opsize:2 Opsize[6]:2
+PC: 000a  MNEMONIC: jmp  addrmode: 13  mnemask: 00002040 adrmode: 13  Cvt[am]: 0   Mnext:-1   value: 256
+final addrmode = 13, opsize:2 Opsize[13]:2
+PC: 000d  MNEMONIC: jmp  addrmode: 13  mnemask: 00002040 adrmode: 13  Cvt[am]: 0   Mnext:13   value: 16
+final addrmode = 13, opsize:1 Opsize[13]:2
+PC: 0010  MNEMONIC: jmp  addrmode: 3  mnemask: 00002040 adrmode: 6  Cvt[am]: 9   Mnext:13   value: 16
+final addrmode = 13, opsize:1 Opsize[13]:2
+
+Complete. (0)

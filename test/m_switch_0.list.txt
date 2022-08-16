@@ -1,0 +1,9 @@
+------- FILE m_switch_0.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????
+      3  0000 ????				      .processor	6502
+      4  0000 ????
+      5  0000 ????
+m_switch_0.asm (6): error: Recursion too deep in code segment growing larger (16778240) than max. allowed file size (16777216)
+
+Aborting assembly

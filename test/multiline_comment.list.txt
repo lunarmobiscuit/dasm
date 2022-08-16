@@ -1,0 +1,23 @@
+------- FILE multiline_comment.asm LEVEL 1 PASS 1
+      1  0000					      processor	6502
+      2  1000					      ORG	$1000
+      3  1000
+      4  1000		       a9 00		      lda	#0	;/* comment 1 *
+      5  1002
+      6  1002							;/* IF 0
+      7  1002							;*/
+      8  1002
+      9  1002		       a9 01		      lda	#1	;/*test*
+     10  1004							;/*
+     11  1004							;
+     12  1004		       a9 02		      lda	#2	;*/
+     13  1006
+     14  1006							;/*
+     15  1006		       a9 03	   label      lda	#3	;*/hello
+     16  1008
+     17  1008		       a9 04		      lda	#4	;/*foo*;/*bar*
+     18  100a
+     19  100a							;/* more
+     20  100a							;   comments
+     21  100a		       a9 05	   mylabel    lda	#5	;*/	 ;/* too many comments*;/*but we can deal with it*
+     22  100c

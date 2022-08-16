@@ -1,0 +1,10 @@
+PC: 0000  MNEMONIC: and  addrmode: 3  mnemask: 000019da adrmode: 3  Cvt[am]: 6   Mnext:3   value: 1
+final addrmode = 3, opsize:1 Opsize[3]:1
+PC: 0002  MNEMONIC: and  addrmode: 3  mnemask: 000019da adrmode: 3  Cvt[am]: 6   Mnext:6   value: 1
+final addrmode = 6, opsize:1 Opsize[6]:2
+PC: 0005  MNEMONIC: ldy  addrmode: 16  mnemask: 000000da adrmode: 4  Cvt[am]: 7   Mnext:3   value: 1
+final addrmode = 4, opsize:1 Opsize[4]:1
+PC: 0007  MNEMONIC: ldy  addrmode: 16  mnemask: 000000da adrmode: 4  Cvt[am]: 7   Mnext:6   value: 1
+final addrmode = 7, opsize:1 Opsize[7]:2
+
+Complete. (0)

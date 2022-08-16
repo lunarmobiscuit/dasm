@@ -1,0 +1,9 @@
+------- FILE selftest/1_no_binary.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????
+      3  0000 ????				      .processor	6502
+      4  0000					      .org	0
+      5  0000
+      6  0000							;
+      7  0000							; should create a zero sized file, testing the test-enginge for zero-binaries
+      8  0000							;

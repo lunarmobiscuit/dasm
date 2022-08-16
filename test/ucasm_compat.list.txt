@@ -1,0 +1,48 @@
+------- FILE ucasm_compat.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .PROCESSOR	68hc908
+      3  0000 ????
+      4  0000 ????	       01 f4	   FIVE_HUNDRED .EQU	500
+      5  0000 ????
+      6  0000 ????	       00 41	   _v@0041    .EQU	$0041	; disassembler generated variable name
+      7  0000 ????
+      8  fc00					      .ORG	$FC00
+      9  fc00
+     10  fc00				   F_@fc00		; disassembler detected function label
+     11  fc00		       c6 00 00 	      lda	_v@fc1a
+     12  fc03		       b7 41		      sta	_v@0041
+     13  fc05		       26 41		      bne	_L@fc11
+     14  fc07		       d4 01 2c 	      and	300,X
+     15  fc0a		       d4 01 2c 	      and	[X+300]
+     16  fc0d		       9e d9 01 2c	      adc	300,SP
+     17  fc11				   _L@fc11		; disassembler detected branch or jump label
+     18  fc11		       9e d9 01 f4	      adc	[SP+FIVE_HUNDRED]
+     19  fc15		       9e d9 01 f4	      adc	[SP+500]
+     20  fc19		       81		      rts
+     21  fc1a
+     22  fc1a				   _v@fc1a		; disassembler generated variable name
+     23  fc1a		       0c		      DC.b	$0C
+------- FILE ucasm_compat.asm LEVEL 1 PASS 2
+      1  fc1b ????
+      2  fc1b ????				      .PROCESSOR	68hc908
+      3  fc1b ????
+      4  fc1b ????	       01 f4	   FIVE_HUNDRED .EQU	500
+      5  fc1b ????
+      6  fc1b ????	       00 41	   _v@0041    .EQU	$0041	; disassembler generated variable name
+      7  fc1b ????
+      8  fc00					      .ORG	$FC00
+      9  fc00
+     10  fc00				   F_@fc00		; disassembler detected function label
+     11  fc00		       c6 fc 1a 	      lda	_v@fc1a
+     12  fc03		       b7 41		      sta	_v@0041
+     13  fc05		       26 0a		      bne	_L@fc11
+     14  fc07		       d4 01 2c 	      and	300,X
+     15  fc0a		       d4 01 2c 	      and	[X+300]
+     16  fc0d		       9e d9 01 2c	      adc	300,SP
+     17  fc11				   _L@fc11		; disassembler detected branch or jump label
+     18  fc11		       9e d9 01 f4	      adc	[SP+FIVE_HUNDRED]
+     19  fc15		       9e d9 01 f4	      adc	[SP+500]
+     20  fc19		       81		      rts
+     21  fc1a
+     22  fc1a				   _v@fc1a		; disassembler generated variable name
+     23  fc1a		       0c		      DC.b	$0C

@@ -1,6 +1,4 @@
 /*
-    $Id: mnef8.c 115 2008-04-08 02:55:57Z phf $
-
     the DASM macro assembler (aka small systems cross assembler)
 
     Copyright (c) 1988-2002 by Matthew Dillon.
@@ -34,8 +32,6 @@
 #include <strings.h>
 
 #include "asm.h"
-
-SVNTAG("$Id: mnef8.c 115 2008-04-08 02:55:57Z phf $");
 
 /*
  * special registers. must use numbers from 16 and up,
@@ -517,6 +513,7 @@ static void v_lr(char *str, MNEMONIC *mne) {
     }
 }
 
+extern int pass;
 
 /*
  * generates branch opcodes
@@ -541,10 +538,12 @@ static void generate_branch(unsigned char opcode, char *str) {
     /* calculate displacement */
     if (isPCKnown()) {
         disp = target_adr - getPC() - 1;
-        if (disp > 127 || disp < -128) {
-            char buf[64];
-            sprintf(buf, "%d", (int)disp);
-            asmerr(ERROR_BRANCH_OUT_OF_RANGE, false, buf);
+
+        if (disp > 127 || disp < -128)
+        {
+                char buf[64];
+                sprintf(buf, "%d", (int)disp);
+                asmerr(ERROR_BRANCH_OUT_OF_RANGE, false, buf);
         }
     } else {
         /* unknown pc, will be (hopefully) resolved in future passes */

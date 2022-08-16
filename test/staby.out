@@ -1,0 +1,6 @@
+PC: 0000  MNEMONIC: stab  addrmode: 17  mnemask: 00000078 adrmode: 5  Cvt[am]: 8   Mnext:-1   value: 256
+final addrmode = 5, opsize:2 Opsize[5]:1
+staby.asm (10): error: Value in 'stab RESP1,y' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

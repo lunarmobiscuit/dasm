@@ -1,0 +1,24 @@
+------- FILE missing_endm.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .PROCESSOR	68908
+      3  0000 ????
+      4  0000					      .ORG	0
+      5  0000
+      6  0000					      .mac	predef
+      7  0000					      lda	#5
+      8  0000					      .macro
+      9  0000
+     10  0000				   Main
+     11  0000					      predef
+     12  0000					      rola
+     13  0000					      write_usb
+     14  0000					      rora
+     15  0000					      rts
+     16  0000
+     17  0000					      .macro	write_usb
+     18  0000					      sta	6
+     19  0000					      .endm
+     20  0000
+     21  0000							;
+     22  0000							; premature end of file  or  '"endm" missing'
+     23  0000							;

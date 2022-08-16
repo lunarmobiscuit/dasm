@@ -1,6 +1,4 @@
 /*
-    $Id: ftohex.c 115 2008-04-08 02:55:57Z phf $
-
     the DASM macro assembler (aka small systems cross assembler)
 
     Copyright (c) 1988-2002 by Matthew Dillon.
@@ -38,8 +36,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static const char svnid[] = "$Id: ftohex.c 115 2008-04-08 02:55:57Z phf $";
-
 #define PERLINE 16
 
 void exiterr(const char *str);
@@ -56,7 +52,7 @@ main(int ac, char **av)
 
     if (ac < 3) {
 	puts("FTOHEX format infile [outfile]");
-	puts("format 1,2, or 3.  3=raw");
+	puts("format 1 = DEFAULT, 2 = RAS, or 3 = RAW");
 	puts("Copyright (c) 1988-2008 by various authors (see file AUTHORS).");
 	exit(1);
     }

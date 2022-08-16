@@ -1,0 +1,7 @@
+------- FILE 6811_X16.asm LEVEL 1 PASS 1
+      1  0000					      .PROCESSOR	68hc11
+      2  0000					      .ORG	0
+      3  0000
+6811_X16.asm (4): error: Value in 'adda 500,X' must be <$100.
+      4  0000		       ab f4		      addA	500,X	; word offset is not allowed with this mnemonic
+      5  0002

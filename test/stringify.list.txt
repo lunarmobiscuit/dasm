@@ -1,0 +1,50 @@
+------- FILE stringify.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .PROCESSOR	6502
+      3  0000 ????
+      4  0400					      .ORG	1024
+      5  0400		       b0 07		      .word.w	1968
+      6  0402		       00 00		      .word.w	endprg
+      7  0404		       ff		      .byte.b	$FF	; make odd alignment
+      8  0405		       00		      .byte.b	[MainStart]d	; ASCII representation of MainStart
+      9  0406		       20 54 45 53*	      .byte.b	" TEST ",0
+     10  040d				   endprg
+     11  040d		       00 00 00 	      .byte.b	0,0,0
+     12  0410
+     13  04d2					      .ORG	1234
+     14  04d2				   MainStart
+     15  04d2		       60		      rts
+------- FILE stringify.asm LEVEL 1 PASS 2
+      1  04d3 ????
+      2  04d3 ????				      .PROCESSOR	6502
+      3  04d3 ????
+      4  0400					      .ORG	1024
+      5  0400		       b0 07		      .word.w	1968
+      6  0402		       0d 04		      .word.w	endprg
+      7  0404		       ff		      .byte.b	$FF	; make odd alignment
+      8  0405		       31 32 33 34	      .byte.b	[MainStart]d	; ASCII representation of MainStart
+      9  0409		       20 54 45 53*	      .byte.b	" TEST ",0
+stringify.asm (10): error: Label mismatch...
+ --> endprg 040d                  
+     10  0410				   endprg
+     11  0410		       00 00 00 	      .byte.b	0,0,0
+     12  0413
+     13  04d2					      .ORG	1234
+     14  04d2				   MainStart
+     15  04d2		       60		      rts
+------- FILE stringify.asm LEVEL 1 PASS 3
+      1  04d3 ????
+      2  04d3 ????				      .PROCESSOR	6502
+      3  04d3 ????
+      4  0400					      .ORG	1024
+      5  0400		       b0 07		      .word.w	1968
+      6  0402		       10 04		      .word.w	endprg
+      7  0404		       ff		      .byte.b	$FF	; make odd alignment
+      8  0405		       31 32 33 34	      .byte.b	[MainStart]d	; ASCII representation of MainStart
+      9  0409		       20 54 45 53*	      .byte.b	" TEST ",0
+     10  0410				   endprg
+     11  0410		       00 00 00 	      .byte.b	0,0,0
+     12  0413
+     13  04d2					      .ORG	1234
+     14  04d2				   MainStart
+     15  04d2		       60		      rts

@@ -1,0 +1,14 @@
+------- FILE 6502_16h.asm LEVEL 1 PASS 1
+      1  0000					      .PROCESSOR	6502
+      2  0000					      .TRACE	on
+      3  0000 ????
+      4  0000					      .ORG	0
+      5  0000
+      6  0000		       25 01		      and.b	>400	; forced byte addressing and taking higher part should be OK
+      7  0002		       2d 01 00 	      and.w	>400
+      8  0005
+      9  0005		       b4 01		      ldy.b	>400,X
+     10  0007		       bc 01 00 	      ldy.w	>400,X
+     11  000a
+     12  000a
+     13  000a

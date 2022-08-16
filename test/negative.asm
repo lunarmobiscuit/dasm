@@ -1,5 +1,3 @@
-; $Id: negative.asm 39 2008-04-01 10:57:16Z phf $
-;
 ; Test negative literals.
 ;
 ; This came about because of the "-1 bug" in 2.20.10 and

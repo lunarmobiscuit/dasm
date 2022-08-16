@@ -1,6 +1,4 @@
 /*
-    $Id: symbols.c 72 2008-04-05 20:49:29Z phf $
-
     the DASM macro assembler (aka small systems cross assembler)
 
     Copyright (c) 1988-2002 by Matthew Dillon.
@@ -28,8 +26,6 @@
  */
 
 #include "asm.h"
-
-SVNTAG("$Id: symbols.c 72 2008-04-05 20:49:29Z phf $");
 
 static unsigned int hash1(const char *str, int len);
 SYMBOL *allocsymbol(void);
@@ -135,11 +131,13 @@ SYMBOL *CreateSymbol( const char *str, int len )
 
 static unsigned int hash1(const char *str, int len)
 {
-    unsigned int result = 0;
-    
-    while (len--)
-        result = (result << 2) ^ *str++;
-    return result & SHASHAND;
+    uint8_t a = 0;
+    uint8_t b = 0;
+    while (len--) {	// this is Fletcher's checksum, better distribution, faster
+    	a += *str++;
+    	b += a;
+    }
+    return ((((a << 8) & 0xFF00) | (b & 0xFF))  ) & SHASHAND;
 }
 
 /*
@@ -203,12 +201,18 @@ void programlabel(void)
             * previous pass, don't complain about phase errors
             * too loudly.
                 */
-                if (F_verbose >= 1 || !(Redo_if & (REASON_OBSCURE)))
+
+                //FIX: calling asmerr with ERROR_LABEL_MISMATCH is fatal. The clause
+                //     below was causing aborts if verbosity was up, even when the
+                //     phase errors were the result of unevaluated IF expressions in
+                //     the previous pass.
+
+                //if (F_verbose >= 1 || !(Redo_if & (REASON_OBSCURE))) 
+
+                if (!(Redo_if & (REASON_OBSCURE)))
                 {
-                    char sBuffer[ MAX_SYM_LEN * 2 ];
+                    char sBuffer[ MAX_SYM_LEN * 4 ];
                     sprintf( sBuffer, "%s %s", sym->name, sftos( sym->value, 0 ) );
-                    /*, sftos(sym->value,
-                    sym->flags) ); , sftos(pc, cflags & 7));*/
                     asmerr( ERROR_LABEL_MISMATCH, false, sBuffer );
                 }
                 ++Redo;

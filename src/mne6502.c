@@ -1,6 +1,4 @@
 /*
-    $Id: mne6502.c 72 2008-04-05 20:49:29Z phf $
-
     the DASM macro assembler (aka small systems cross assembler)
 
     Copyright (c) 1988-2002 by Matthew Dillon.
@@ -28,8 +26,6 @@
  */
 
 #include "asm.h"
-
-SVNTAG("$Id: mne6502.c 72 2008-04-05 20:49:29Z phf $");
 
 #define ASTD	AF_BYTEADR|AF_BYTEADRX|AF_WORDADR|AF_WORDADRX|\
 	AF_WORDADRY|AF_INDBYTEX|AF_INDBYTEY

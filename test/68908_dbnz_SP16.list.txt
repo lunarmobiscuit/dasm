@@ -1,0 +1,7 @@
+------- FILE 68908_dbnz_SP16.asm LEVEL 1 PASS 1
+      1  0000					      .PROCESSOR	68hc908
+      2  0000					      .ORG	0
+      3  0000				   backLoop
+68908_dbnz_SP16.asm (4): error: Value in 'dbnz 400,SP,backLoop' must be <$100.
+      4  0000		       9e 6b 90 fc	      dbnz	400,SP,backLoop	; word offset is not allowed with this mnemonic
+      5  0004

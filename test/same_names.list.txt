@@ -1,0 +1,64 @@
+------- FILE same_names.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .TRACE	on
+      3  0000 ????
+      4  0000 ????				      .PROCESSOR	68908
+      5  0000 ????
+      6  0000 ????				      .MAC	ldx
+      7  0000 ????				      lda	{1}
+      8  0000 ????				      .ENDM		; we cant overwrite any of the processor ops
+      9  0000 ????
+     10  0000 ????				      .MAC	ldhx
+     11  0000 ????				      ldx	<{1}
+     12  0000 ????				      lda	>{1}
+     13  0000 ????				      psha
+     14  0000 ????				      pulh
+     15  0000 ????				      .ENDM		; also not with different case
+     16  0000 ????
+     17  0000 ????				      .MAC	m1_postfix7
+     18  0000 ????				      ldhx	#1
+     19  0000 ????				      .ENDM
+     20  0000 ????
+     21  0000 ????				      .MAC	m2_postfix7
+     22  0000 ????				      ldx	#1
+     23  0000 ????				      clrh
+     24  0000 ????				      .ENDM
+     25  0000 ????
+     26  0000 ????	       00 a1	   M1_postfix7 .EQU	0xA1	; symbols can share the same name with macros or processor ops
+     27  0000 ????	       00 b2	   M2_postfix7 .EQU	0xB2
+     28  0000 ????	       00 da	   LDA	      .EQU	0xDA
+     29  0000 ????
+     30  0000 ????				      .MAC	m3_postfix7
+     31  0000 ????				      pshh
+     32  0000 ????				      pulx
+     33  0000 ????				      .ENDM
+     34  0000 ????
+     35  0000 ????
+     36  0000					      .ORG	0
+     37  0000
+     38  0000							; call to macro1
+      0  0000					      M1_postfix7
+      1  0000		       45 00 01 	      ldhx	#1
+     40  0003
+     41  0003							; call to macro2
+      0  0003					      M2_postfix7
+      1  0003		       ae 01		      ldx	#1
+      2  0005		       8c		      clrh
+     43  0006
+     44  0006		       a1		      DC.b	M1_postfix7
+     45  0007		       b2		      DC.b	M2_postfix7
+     46  0008		       da		      DC.b	LDA
+     47  0009
+     48  0009		       a6 0a		      lda	#0x0a
+     49  000b		       a6 0b		      LDA	#0x0b
+     50  000d
+     51  000d							; call to macro3
+      0  000d					      M3_postfix7
+      1  000d		       8b		      pshh
+      2  000e		       88		      pulx
+     53  000f
+     54  000f		       ae 01		      ldx	#1
+     55  0011		       45 00 02 	      ldhx	#2
+     56  0014		       45 00 03 	      LDHX	#3
+     57  0017
+     58  0017					      .END

@@ -1,0 +1,13 @@
+------- FILE 68908_DCswap.asm LEVEL 1 PASS 1
+      1  0000					      .PROCESSOR	68908
+      2  0000 ????
+      3  0000					      .ORG	0
+      4  0000
+      5  0000		       ee 00		      DC.w	$EE00	; native is big endian
+      6  0002
+      7  0002		       00 ff		      DC.s	$FF00	; the opposite
+      8  0004
+      9  0004		       00 4d 00 75*	      DC.w	"Multibyte String"
+     10  0024
+     11  0024		       4c 00 69 00*	      DC.s	"Little Endian"
+     12  003e

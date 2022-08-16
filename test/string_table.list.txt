@@ -1,0 +1,37 @@
+------- FILE string_table.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  e295					      .ORG	$e295
+      3  e295
+      4  e295				   _Str0Desc
+string_table.asm (5): error: Value in 'byte dc -58005' must be <$100.
+      5  e295		       6b 03		      DC.b	_Str1Desc - _Str0Desc,$03
+      6  e297		       09 04		      DC.b	$09,$04
+      7  e299				   _Str1Desc
+string_table.asm (8): error: Value in 'byte dc -58009' must be <$100.
+      8  e299		       67 03		      DC.b	_Str2Desc - _Str1Desc,$03	; $28,$03
+      9  e29b		       00 4d 00 43*	      DC.w	"MCT Electronikladen"
+     10  e2c1				   _Str2Desc
+string_table.asm (11): error: Value in 'byte dc -58049' must be <$100.
+     11  e2c1		       3f 03		      DC.b	_StrTable - _Str2Desc,$03	; $2e,$03
+     12  e2c3		       00 55 00 53*	      DC.w	"USB08 Evaluation Board"
+     13  e2ef				   _StrTable
+     14  e2ef		       e2 95	   _Str0Vec   DC.w	_Str0Desc	; ..	 $e2ef	 e2 95
+     15  e2f1		       e2 99	   _Str1Vec   DC.w	_Str1Desc	; ..	 $e2f1	 e2 99
+     16  e2f3		       e2 c1	   _Str2Vec   DC.w	_Str2Desc	; ..	 $e2f3	 e2 c1
+------- FILE string_table.asm LEVEL 1 PASS 2
+      1  e2f5 ????
+      2  e295					      .ORG	$e295
+      3  e295
+      4  e295				   _Str0Desc
+      5  e295		       04 03		      DC.b	_Str1Desc - _Str0Desc,$03
+      6  e297		       09 04		      DC.b	$09,$04
+      7  e299				   _Str1Desc
+      8  e299		       28 03		      DC.b	_Str2Desc - _Str1Desc,$03	; $28,$03
+      9  e29b		       00 4d 00 43*	      DC.w	"MCT Electronikladen"
+     10  e2c1				   _Str2Desc
+     11  e2c1		       2e 03		      DC.b	_StrTable - _Str2Desc,$03	; $2e,$03
+     12  e2c3		       00 55 00 53*	      DC.w	"USB08 Evaluation Board"
+     13  e2ef				   _StrTable
+     14  e2ef		       e2 95	   _Str0Vec   DC.w	_Str0Desc	; ..	 $e2ef	 e2 95
+     15  e2f1		       e2 99	   _Str1Vec   DC.w	_Str1Desc	; ..	 $e2f1	 e2 99
+     16  e2f3		       e2 c1	   _Str2Vec   DC.w	_Str2Desc	; ..	 $e2f3	 e2 c1

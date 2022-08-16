@@ -1,0 +1,11 @@
+PC: 0000  MNEMONIC: and  addrmode: 3  mnemask: 000019da adrmode: 3  Cvt[am]: 6   Mnext:-1   value: 524480
+final addrmode = 3, opsize:2 Opsize[3]:1
+PC: 0003  MNEMONIC: and  addrmode: 3  mnemask: 000019da adrmode: 3  Cvt[am]: 6   Mnext:6   value: 524480
+final addrmode = 6, opsize:2 Opsize[6]:2
+PC: 0006  MNEMONIC: and  addrmode: 3  mnemask: 000019da adrmode: 3  Cvt[am]: 6   Mnext:3   value: 524480
+final addrmode = 3, opsize:2 Opsize[3]:1
+6502_16w.asm (10): error: Value in 'and my_addr' must be <$10000.
+6502_16w.asm (11): error: Value in 'and my_addr, user requested byte mode' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

@@ -1,0 +1,196 @@
+------- FILE align_mod_mac.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????
+      3  0000 ????				      .PROCESSOR	6502
+      4  0000 ????
+      5  0000 ????				      .TRACE	1
+      6  0000 ????
+      7  0000 ????				      .ifnconst	FLASH_START
+      8  0000 ????	       f8 00	   FLASH_START .EQU	$F800
+      9  0000 ????				      .endif
+     10  0000 ????
+     11  0000 ????				      .ifnconst	segmentModding
+     12  0000 ????	       00 01	   segmentModding .EQU	1
+     13  0000 ????				      .endif
+     14  0000 ????
+     15  0000 ????						;
+     16  0000 ????						; the macro alignspace let you fill up memory until the next {block_size} boundary
+     17  0000 ????						; one must give a unique {name}
+     18  0000 ????						;
+     19  0000 ????				      .mac	alignspace
+     20  0000 ????			   _alMod{1}  .EQU	({2}-(. % {2}))
+     21  0000 ????			   _alSpace{1} .DS	_alMod{1},$ac
+     22  0000 ????				      .endm		; {name},{block_size}
+     23  0000 ????
+     24  0000 ????						;
+     25  0000 ????						; the macro modspacer fills up memory with {char} until the next {block_size}
+     26  0000 ????						; one must give a unique {name}
+     27  0000 ????						;
+     28  0000 ????				      .mac	modspacer
+     29  0000 ????			   _mark{1}
+     30  0000 ????			   _delta{1}  .EQU	(_mark{1} - FLASH_START)
+     31  0000 ????				      .IF	(_delta{1} > 0)
+     32  0000 ????			   _modulo{1} .EQU	({2}-(_delta{1} % {2}))
+     33  0000 ????
+     34  0000 ????				      .IF	({3} > 0)
+     35  0000 ????			   _modpos{1} .EQU	(32-(. % 32))
+     36  0000 ????				      .IF	(_modpos{1} < 16)
+     37  0000 ????				      .DS	32,{3}
+     38  0000 ????				      .ENDIF
+     39  0000 ????				      .ENDIF
+     40  0000 ????			   _spacer{1} .DS	_modulo{1},{3}
+     41  0000 ????				      .ENDIF
+     42  0000 ????				      .ENDM		; {name},{block_size},{char}
+     43  0000 ????
+     44  0000 ????						;
+     45  0000 ????						; the macro codesegmarker fills up memory
+     46  0000 ????						; the string {name} is padded with ' ' to length 16 and put at the beginning, the remaining is filled with 0xFF
+     47  0000 ????						; one must give a unique {ID}
+     48  0000 ????						;
+     49  0000 ????						; this is useful if you want to speed-up flash programming with a larger code base and the need to incorporate small changes
+     50  0000 ????						; because of the aligned segments a small code change may not introduce a complete shift of the following code and thus
+     51  0000 ????						; avoid to re-program the following pages
+     52  0000 ????						;
+     53  0000 ????						; if the symbol 'segmentModding' == 0 the segment starts at address (FLASH_START + block_size)
+     54  0000 ????						; if 'segmentModding' == 1 the segment starts at next 32 byte boundary  address
+     55  0000 ????						;
+     56  0000 ????				      .mac	codesegmarker
+     57  0000 ????				      .IF	(segmentModding > 0)
+     58  0000 ????				      modspacer	{2}a,32,$ff
+     59  0000 ????				      .ELSE
+     60  0000 ????				      .ORG	({3} + FLASH_START)
+     61  0000 ????				      .ENDIF
+     62  0000 ????				      .DC	{1}
+     63  0000 ????				      modspacer	{2}b,16,32
+     64  0000 ????				      .ENDM		; {name},{uniqueID},{block_size}
+     65  0000 ????
+     66  0000 ????
+     67  f800					      .ORG	FLASH_START
+     68  f800
+      0  f800					      alignspace	Registers,$40
+      1  f800		       00 40	   _alModRegisters .EQU	($40-(. % $40))
+      2  f800		       ac ac ac ac*_alSpaceRegisters .DS	_alModRegisters,$ac
+     70  f840
+      0  f840					      codesegmarker	"serialFunc",5,$2a0
+      1  f840					      .IF	(segmentModding > 0)
+      0  f840					      modspacer	5a,32,$ff
+      1  f840				   _mark5a
+      2  f840		       00 40	   _delta5a   .EQU	(_mark5a - FLASH_START)
+      3  f840					      .IF	(_delta5a > 0)
+      4  f840		       00 20	   _modulo5a  .EQU	(32-(_delta5a % 32))
+      5  f840
+      6  f840					      .IF	($ff > 0)
+      7  f840		       00 20	   _modpos5a  .EQU	(32-(. % 32))
+      8  f840				  -	      .IF	(_modpos5a < 16)
+      9  f840				  -	      .DS	32,$ff
+     10  f840					      .ENDIF
+     11  f840					      .ENDIF
+     12  f840		       ff ff ff ff*_spacer5a  .DS	_modulo5a,$ff
+     13  f860					      .ENDIF
+      3  f860				  -	      .ELSE
+      4  f860				  -	      .ORG	($2a0 + FLASH_START)
+      5  f860					      .ENDIF
+      6  f860		       73 65 72 69*	      .DC	"serialFunc"
+      0  f86a					      modspacer	5b,16,32
+      1  f86a				   _mark5b
+      2  f86a		       00 6a	   _delta5b   .EQU	(_mark5b - FLASH_START)
+      3  f86a					      .IF	(_delta5b > 0)
+      4  f86a		       00 06	   _modulo5b  .EQU	(16-(_delta5b % 16))
+      5  f86a
+      6  f86a					      .IF	(32 > 0)
+      7  f86a		       00 16	   _modpos5b  .EQU	(32-(. % 32))
+      8  f86a				  -	      .IF	(_modpos5b < 16)
+      9  f86a				  -	      .DS	32,32
+     10  f86a					      .ENDIF
+     11  f86a					      .ENDIF
+     12  f86a		       20 20 20 20*_spacer5b  .DS	_modulo5b,32
+     13  f870					      .ENDIF
+     72  f870
+     73  f870							;	.INCLUDE<------>../common/serialFunc.asm
+     74  f870		       ea		      nop
+     75  f871
+      0  f871					      codesegmarker	"serialISR",6,$2e0
+      1  f871					      .IF	(segmentModding > 0)
+      0  f871					      modspacer	6a,32,$ff
+      1  f871				   _mark6a
+      2  f871		       00 71	   _delta6a   .EQU	(_mark6a - FLASH_START)
+      3  f871					      .IF	(_delta6a > 0)
+      4  f871		       00 0f	   _modulo6a  .EQU	(32-(_delta6a % 32))
+      5  f871
+      6  f871					      .IF	($ff > 0)
+      7  f871		       00 0f	   _modpos6a  .EQU	(32-(. % 32))
+      8  f871					      .IF	(_modpos6a < 16)
+      9  f871		       ff ff ff ff*	      .DS	32,$ff
+     10  f891					      .ENDIF
+     11  f891					      .ENDIF
+     12  f891		       ff ff ff ff*_spacer6a  .DS	_modulo6a,$ff
+     13  f8a0					      .ENDIF
+      3  f8a0				  -	      .ELSE
+      4  f8a0				  -	      .ORG	($2e0 + FLASH_START)
+      5  f8a0					      .ENDIF
+      6  f8a0		       73 65 72 69*	      .DC	"serialISR"
+      0  f8a9					      modspacer	6b,16,32
+      1  f8a9				   _mark6b
+      2  f8a9		       00 a9	   _delta6b   .EQU	(_mark6b - FLASH_START)
+      3  f8a9					      .IF	(_delta6b > 0)
+      4  f8a9		       00 07	   _modulo6b  .EQU	(16-(_delta6b % 16))
+      5  f8a9
+      6  f8a9					      .IF	(32 > 0)
+      7  f8a9		       00 17	   _modpos6b  .EQU	(32-(. % 32))
+      8  f8a9				  -	      .IF	(_modpos6b < 16)
+      9  f8a9				  -	      .DS	32,32
+     10  f8a9					      .ENDIF
+     11  f8a9					      .ENDIF
+     12  f8a9		       20 20 20 20*_spacer6b  .DS	_modulo6b,32
+     13  f8b0					      .ENDIF
+     77  f8b0
+     78  f8b0							;	.INCLUDE<------>../common/serialISR.asm
+     79  f8b0		       ea		      nop
+     80  f8b1		       ea		      nop
+     81  f8b2
+      0  f8b2					      codesegmarker	"timerISR",7,$400
+      1  f8b2					      .IF	(segmentModding > 0)
+      0  f8b2					      modspacer	7a,32,$ff
+      1  f8b2				   _mark7a
+      2  f8b2		       00 b2	   _delta7a   .EQU	(_mark7a - FLASH_START)
+      3  f8b2					      .IF	(_delta7a > 0)
+      4  f8b2		       00 0e	   _modulo7a  .EQU	(32-(_delta7a % 32))
+      5  f8b2
+      6  f8b2					      .IF	($ff > 0)
+      7  f8b2		       00 0e	   _modpos7a  .EQU	(32-(. % 32))
+      8  f8b2					      .IF	(_modpos7a < 16)
+      9  f8b2		       ff ff ff ff*	      .DS	32,$ff
+     10  f8d2					      .ENDIF
+     11  f8d2					      .ENDIF
+     12  f8d2		       ff ff ff ff*_spacer7a  .DS	_modulo7a,$ff
+     13  f8e0					      .ENDIF
+      3  f8e0				  -	      .ELSE
+      4  f8e0				  -	      .ORG	($400 + FLASH_START)
+      5  f8e0					      .ENDIF
+      6  f8e0		       74 69 6d 65*	      .DC	"timerISR"
+      0  f8e8					      modspacer	7b,16,32
+      1  f8e8				   _mark7b
+      2  f8e8		       00 e8	   _delta7b   .EQU	(_mark7b - FLASH_START)
+      3  f8e8					      .IF	(_delta7b > 0)
+      4  f8e8		       00 08	   _modulo7b  .EQU	(16-(_delta7b % 16))
+      5  f8e8
+      6  f8e8					      .IF	(32 > 0)
+      7  f8e8		       00 18	   _modpos7b  .EQU	(32-(. % 32))
+      8  f8e8				  -	      .IF	(_modpos7b < 16)
+      9  f8e8				  -	      .DS	32,32
+     10  f8e8					      .ENDIF
+     11  f8e8					      .ENDIF
+     12  f8e8		       20 20 20 20*_spacer7b  .DS	_modulo7b,32
+     13  f8f0					      .ENDIF
+     83  f8f0
+     84  f8f0		       ea		      nop
+     85  f8f1							;	.INCLUDE<------>../common/timerISR.asm
+     86  f8f1
+     87  f8f1
+     88  f8f1
+     89  f8f1
+     90  f8f1
+     91  f8f1
+     92  f8f1
+     93  f8f1
+     94  f8f1				   <-

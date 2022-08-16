@@ -1,0 +1,22 @@
+PC: 0000  MNEMONIC: ldhx  addrmode: 1  mnemask: 0000000c adrmode: 2  Cvt[am]: 0   Mnext:-1   value: 1
+final addrmode = 2, opsize:1 Opsize[2]:2
+PC: 0003  MNEMONIC: ldx  addrmode: 1  mnemask: 003100da adrmode: 1  Cvt[am]: 2   Mnext:-1   value: 1
+final addrmode = 1, opsize:1 Opsize[1]:1
+PC: 0005  MNEMONIC: clrh  addrmode: 0  mnemask: 00000001 adrmode: 0  Cvt[am]: 0   Mnext:-1   value: 0
+final addrmode = 0, opsize:0 Opsize[0]:0
+PC: 0009  MNEMONIC: lda  addrmode: 1  mnemask: 003100da adrmode: 1  Cvt[am]: 2   Mnext:-1   value: 10
+final addrmode = 1, opsize:1 Opsize[1]:1
+PC: 000b  MNEMONIC: lda  addrmode: 1  mnemask: 003100da adrmode: 1  Cvt[am]: 2   Mnext:-1   value: 11
+final addrmode = 1, opsize:1 Opsize[1]:1
+PC: 000d  MNEMONIC: pshh  addrmode: 0  mnemask: 00000001 adrmode: 0  Cvt[am]: 0   Mnext:-1   value: 0
+final addrmode = 0, opsize:0 Opsize[0]:0
+PC: 000e  MNEMONIC: pulx  addrmode: 0  mnemask: 00000001 adrmode: 0  Cvt[am]: 0   Mnext:-1   value: 0
+final addrmode = 0, opsize:0 Opsize[0]:0
+PC: 000f  MNEMONIC: ldx  addrmode: 1  mnemask: 003100da adrmode: 1  Cvt[am]: 2   Mnext:-1   value: 1
+final addrmode = 1, opsize:1 Opsize[1]:1
+PC: 0011  MNEMONIC: ldhx  addrmode: 1  mnemask: 0000000c adrmode: 2  Cvt[am]: 0   Mnext:-1   value: 2
+final addrmode = 2, opsize:1 Opsize[2]:2
+PC: 0014  MNEMONIC: ldhx  addrmode: 1  mnemask: 0000000c adrmode: 2  Cvt[am]: 0   Mnext:-1   value: 3
+final addrmode = 2, opsize:1 Opsize[2]:2
+
+Complete. (0)

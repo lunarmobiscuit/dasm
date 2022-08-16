@@ -1,0 +1,6 @@
+PC: 0000  MNEMONIC: sta  addrmode: 12  mnemask: 000019d8 adrmode: 12  Cvt[am]: 0   Mnext:8   value: 16
+PC: 0000  MNEMONIC: sta  addrmode: 12  mnemask: 000019d8 adrmode: 12  Cvt[am]: 0   Mnext:8   value: 16
+
+stawy3.asm (11): error: Illegal forced Addressing mode on 'sta'.
+
+Fatal assembly error: Source is not resolvable.

@@ -1,0 +1,30 @@
+------- FILE staby2.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .TRACE	on
+      3  0000 ????
+      4  0000 ????				      .processor	68hc11
+      5  0000 ????
+      6  0000 ????	       00 10	   RESP1      =	$10
+      7  0000 ????
+      8  0000					      .ORG	0
+      9  0000
+staby2.asm (10): error: Illegal forced Addressing mode on 'stab'.
+     10  0000					      stab.wy	RESP1,y
+     11  0000
+     12  0000
+     13  0000
+------- FILE staby2.asm LEVEL 1 PASS 2
+      1  0000 ????
+      2  0000 ????				      .TRACE	on
+      3  0000 ????
+      4  0000 ????				      .processor	68hc11
+      5  0000 ????
+      6  0000 ????	       00 10	   RESP1      =	$10
+      7  0000 ????
+      8  0000					      .ORG	0
+      9  0000
+staby2.asm (10): error: Illegal forced Addressing mode on 'stab'.
+     10  0000					      stab.wy	RESP1,y
+     11  0000
+     12  0000
+     13  0000

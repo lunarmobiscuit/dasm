@@ -1,0 +1,7 @@
+------- FILE improper_equ.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????
+      3  0000 ????
+improper_equ.asm (4): error: Unknown Mnemonic 'IMPROPER_SYMBOL'.
+      4  0000 ????				      IMPROPER_SYMBOL	equ 127
+      5  0000 ????						; equation must start at the beginning of line

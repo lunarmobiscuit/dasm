@@ -1,0 +1,9 @@
+------- FILE reverse_segfault.asm LEVEL 1 PASS 1
+      1  0000 ????						;   segfault
+      2  0000 ????
+      3  0000 ????			   str	      set	""
+      4  0000 ????
+      5  0000 ????			   str	      eqm	"\nAAAAA" + str
+      6  0000 ????
+reverse_segfault.asm (7): error: Recursion too deep in doop()
+Aborting assembly

@@ -1,0 +1,28 @@
+------- FILE macro_same_as_include.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????
+      3  0000 ????				      .PROCESSOR	68908
+      4  0000 ????
+------- FILE same_as_macro LEVEL 2 PASS 1
+      0  0000 ????				      .INCLUDE	same_as_macro
+      1  0000 ????
+      2  0000 ????
+      3  0000 ????				      .MACRO	ttt_macro
+      4  0000 ????				      ldx	#2
+      5  0000 ????				      .ENDM
+      6  0000 ????
+------- FILE macro_same_as_include.asm
+      6  0000 ????						;/* include file names  and macro names can be shared without interfering *
+      7  0000 ????				      .MAC	same_as_macro
+      8  0000 ????				      lda	#1
+      9  0000 ????				      .ENDM
+     10  0000 ????
+     11  0000					      .ORG
+     12  0000
+      0  0000					      same_as_macro
+      1  0000		       a6 01		      lda	#1
+     14  0002
+      0  0002					      ttt_macro
+      1  0002		       ae 02		      ldx	#2
+     16  0004
+     17  0004

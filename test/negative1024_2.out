@@ -1,0 +1,4 @@
+negative1024_2.asm (13): error: Value in 'negative lda #-1024' must be <$100.
+
+Unrecoverable error(s) in pass, aborting assembly!
+Complete. (5)

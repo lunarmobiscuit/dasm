@@ -1,0 +1,16 @@
+------- FILE 6502_16b.asm LEVEL 1 PASS 1
+      1  0000					      .PROCESSOR	6502
+      2  0000					      .TRACE	on
+      3  0000 ????
+      4  0000 ????	       00 80	   RAM_START  .equ	$80
+      5  0000 ????	       01 40	   my_addr    .equ	(RAM_START + 192)
+      6  0000 ????
+      7  0000					      .ORG	0
+      8  0000
+      9  0000		       2d 40 01 	      and	my_addr
+     10  0003		       2d 40 01 	      and.w	my_addr
+6502_16b.asm (11): error: Value in 'and my_addr, user requested byte mode' must be <$100.
+     11  0006		       2d 40 01 	      and.b	my_addr	; forced byte addressing and too large value should trigger
+     12  0009
+     13  0009
+     14  0009

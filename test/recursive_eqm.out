@@ -1,0 +1,4 @@
+error: exp.c:988: recursion > 1000, too deep, aborting
+
+recursive_eqm.asm (17): error: Recursion too deep in pushsymbol()
+

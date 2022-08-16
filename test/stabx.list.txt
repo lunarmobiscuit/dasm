@@ -1,0 +1,15 @@
+------- FILE stabx.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .TRACE	on
+      3  0000 ????
+      4  0000 ????				      .processor	6502
+      5  0000 ????
+      6  0000 ????	       01 00	   RESP1      =	$100
+      7  0000 ????
+      8  0000					      .ORG	0
+      9  0000
+stabx.asm (10): error: Value in 'sta RESP1,x, user requested byte mode' must be <$100.
+     10  0000		       9d 00 01 	      sta.bx	RESP1,x
+     11  0003
+     12  0003
+     13  0003

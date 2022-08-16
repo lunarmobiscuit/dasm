@@ -1,0 +1,23 @@
+------- FILE supercat.asm LEVEL 1 PASS 1
+      1  0000 ????						; Pretty horrible bug... :-/ Switching to signed instead
+      2  0000 ????						; of unsigned arithmetic made this easier to handle but
+      3  0000 ????						; bad use of .ds can still lead to huge files since DASM
+      4  0000 ????						; doesn't enforce an upper bound yet. And what should it
+      5  0000 ????						; be? Hmm...
+      6  0000 ????						;
+      7  0000 ????						; From "supercat" on the atariage.com forums, forwarded by
+      8  0000 ????						; Andrew Davie 2008/04/12.
+      9  0000 ????						;
+     10  0000 ????						; Peter H. Froehlich
+     11  0000 ????						; phf at acm dot org
+     12  0000 ????
+     13  0000 ????				      .processor	6502
+     14  0000 ????
+     15  7ff8					      .org	$7FF8
+     16  7ff8		       01 02 03 04*	      .byte.b	1,2,3,4,5
+     17  7ffd
+     18  7ffd							; original line by "supercat", would produce huge files
+     19  7ffd							; since the "-1" result would be interpreted as a huge
+     20  7ffd							; positive number
+supercat.asm (21): error: Origin Reverse-indexed.
+Aborting assembly

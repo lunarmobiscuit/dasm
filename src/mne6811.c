@@ -1,6 +1,4 @@
 /*
-    $Id: mne6811.c 72 2008-04-05 20:49:29Z phf $
-
     the DASM macro assembler (aka small systems cross assembler)
 
     Copyright (c) 1988-2002 by Matthew Dillon.
@@ -44,8 +42,6 @@
  */
 
 #include "asm.h"
-
-SVNTAG("$Id: mne6811.c 72 2008-04-05 20:49:29Z phf $");
 
 #define AF_STD	 (AF_BYTEADR|AF_BYTEADRX|AF_BYTEADRY|AF_WORDADR)
 #define AF_STDI  (AF_IMM8|AF_STD)

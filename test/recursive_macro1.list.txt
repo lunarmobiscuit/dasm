@@ -1,0 +1,44 @@
+------- FILE recursive_macro1.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .PROCESSOR	6502
+      3  0000 ????
+      4  0000 ????				      .MAC	rec_noend
+      5  0000 ????				      rec_noend
+      6  0000 ????				      .ENDM
+      7  0000 ????
+      8  0000					      .ORG	0
+      9  0000
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+      0  0000					      rec_noend
+recursive_macro1.asm (10): error: Recursion too deep in  macro [rec_noend] recursion > 32
+Aborting assembly

@@ -1,0 +1,17 @@
+------- FILE negative1024_2.asm LEVEL 1 PASS 1
+      1  0000 ????						; Test negative literals.
+      2  0000 ????						;
+      3  0000 ????						; This came about because of the "-1 bug" in 2.20.10 and
+      4  0000 ????						; will hopefully ensure that no such bug ever returns to
+      5  0000 ????						; haunt us again...
+      6  0000 ????						;
+      7  0000 ????						; Peter H. Froehlich
+      8  0000 ????						; phf at acm dot org
+      9  0000 ????
+     10  0000 ????				      .processor	6502
+     11  0000					      .org	0
+     12  0000
+negative1024_2.asm (13): error: Value in 'negative lda #-1024' must be <$100.
+     13  0000		       a5 00		      lda.b	#-1024	; should fail? does NOT yet fail?
+     14  0002
+     15  0002					      .end

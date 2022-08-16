@@ -1,0 +1,14 @@
+------- FILE 6502_X16b.asm LEVEL 1 PASS 1
+      1  0000					      .PROCESSOR	6502
+      2  0000					      .TRACE	on
+      3  0000 ????
+      4  0000 ????	       00 80	   RAM_START  .equ	$80
+      5  0000 ????	       01 40	   addr_offs  .equ	(RAM_START + 192)
+      6  0000 ????
+      7  0000					      .ORG	0
+      8  0000
+6502_X16b.asm (9): error: Value in 'rol addr_offs,X, user requested byte mode' must be <$100.
+      9  0000		       3e 40 01 	      rol.b	addr_offs,X	; forced byte addressing and too large value should trigger
+     10  0003
+     11  0003
+     12  0003

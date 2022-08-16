@@ -1,0 +1,786 @@
+------- FILE suite68hc908.asm LEVEL 1 PASS 1
+      1  0000 ????						;
+      2  0000 ????						;   regression test for all opcodes for 68hc908 controller
+      3  0000 ????						;
+      4  0000 ????						;   two opcodes with indirect X adressing and zero offset are not cleanly supported
+      5  0000 ????						;	dbnz		(X), jumpLabel
+      6  0000 ????						;	cbeq		(X), jumpLabel
+      7  0000 ????						;
+      8  0000 ????						;    one must add forced-address-mode extension ".ix" to the mnemonic and add a dummy variable
+      9  0000 ????						;    in order to get the correct opcodes
+     10  0000 ????						;	dbnz.ix		0, jumpLabel
+     11  0000 ????						;	cbeq.ix		0, jumpLabel
+     12  0000 ????						;
+     13  0000 ????
+     14  0000 ????				      .PROCESSOR	68hc908
+     15  0000 ????
+     16  0000 ????	       00 01	   PTB	      .EQU	1
+     17  0000 ????	       00 02	   PTC	      .EQU	2
+     18  0000 ????	       00 05	   DDRB       .EQU	5
+     19  0000 ????
+     20  0000 ????	       00 05	   FIVE       .EQU	5
+     21  0000 ????	       01 f4	   FIVE_HUNDRED .EQU	500
+     22  0000 ????
+     23  0000 ????	       00 40	   RAM_START  .EQU	0x40
+     24  0000 ????
+     25  fb00					      .ORG	0xFB00
+     26  fb00
+     27  fb00		       ba dc 0d e0	      .byte.b	0xba,0xdc,0x0d,0xe0
+     28  fb04
+     29  fb04		       a9 06		      adc	#6
+     30  fb06		       b9 40		      adc	RAM_START
+     31  fb08		       e9 07		      adc	[X+7]
+     32  fb0a		       c9 00 00 	      adc	constant0
+     33  fb0d		       d9 03 00 	      adc	[X+0x300]
+     34  fb10		       f9		      adc	,X
+     35  fb11		       9e e9 05 	      adc	[SP+5]
+     36  fb14		       9e d9 01 f4	      adc	[SP+500]
+     37  fb18
+     38  fb18		       ab 06		      add	#6
+     39  fb1a		       bb 40		      add	RAM_START
+     40  fb1c		       eb 07		      add	7,X
+     41  fb1e		       cb 00 00 	      add	constant0
+     42  fb21		       db 03 00 	      add	0x300,X
+     43  fb24		       fb		      add	,X
+     44  fb25		       9e eb 05 	      add	FIVE,SP
+     45  fb28		       9e db 01 f4	      add	[SP+FIVE_HUNDRED]
+     46  fb2c
+     47  fb2c		       a7 05		      aiS	#5
+     48  fb2e		       af 06		      aiX	#6
+     49  fb30
+     50  fb30		       a4 06		      and	#6
+     51  fb32		       b4 40		      and	RAM_START
+     52  fb34		       e4 07		      and	7,X
+     53  fb36		       c4 00 00 	      and	constant0
+     54  fb39		       d4 03 00 	      and	[X+0x300]
+     55  fb3c		       f4		      and	,X
+     56  fb3d		       9e e4 05 	      and	5,SP
+     57  fb40		       9e d4 01 f4	      and	FIVE_HUNDRED,SP
+     58  fb44
+     59  fb44		       38 40		      asl	RAM_START
+     60  fb46		       68 03		      asl	3,X
+     61  fb48		       78		      asl	,X
+     62  fb49		       9e 68 05 	      asl	5,SP
+     63  fb4c		       48		      aslA
+     64  fb4d		       58		      aslX
+     65  fb4e
+     66  fb4e		       37 40		      asr	RAM_START
+     67  fb50		       67 03		      asr	3,X
+     68  fb52		       77		      asr	,X
+     69  fb53		       9e 67 05 	      asr	5,SP
+     70  fb56		       47		      asrA
+     71  fb57		       57		      asrX
+     72  fb58
+     73  fb58		       24 67		      bcc	frontLoop
+     74  fb5a		       25 67		      bcs	frontLoop
+     75  fb5c		       27 67		      beq	frontLoop
+     76  fb5e		       28 67		      bhcc	frontLoop
+     77  fb60		       29 67		      bhcs	frontLoop
+     78  fb62		       22 67		      bhi	frontLoop
+     79  fb64		       24 67		      bhs	frontLoop
+     80  fb66		       2f 67		      bih	frontLoop
+     81  fb68		       2e 67		      bil	frontLoop
+     82  fb6a
+     83  fb6a		       a5 06		      bit	#6
+     84  fb6c		       b5 40		      bit	RAM_START
+     85  fb6e		       e5 07		      bit	7,X
+     86  fb70		       c5 00 00 	      bit	constant0
+     87  fb73		       d5 03 00 	      bit	0x300,X
+     88  fb76		       f5		      bit	,X
+     89  fb77		       9e e5 05 	      bit	5,SP
+     90  fb7a		       9e d5 01 f4	      bit	500,SP
+     91  fb7e
+     92  fb7e		       25 d5		      blo	frontLoop
+     93  fb80		       23 d5		      bls	frontLoop
+     94  fb82		       2c d5		      bmc	frontLoop
+     95  fb84		       2b d5		      bmi	frontLoop
+     96  fb86		       2d d5		      bms	frontLoop
+     97  fb88		       26 d5		      bne	frontLoop
+     98  fb8a		       2a d5		      bpl	frontLoop
+     99  fb8c		       20 d5		      bra	frontLoop
+    100  fb8e		       21 d5		      brn	frontLoop
+    101  fb90
+    102  fb90				   subRoutine
+    103  fb90		       81		      rts
+    104  fb91
+    105  fb91		       00 01 01 	      brset	0,PTB,frontLoop
+    106  fb94		       01 02 f9 	      brclr	0,PTC,subRoutine
+    107  fb97		       02 01 f9 	      brset	1,PTB,frontLoop
+    108  fb9a		       03 02 f3 	      brclr	1,PTC,subRoutine
+    109  fb9d		       04 01 f3 	      brset	2,PTB,frontLoop
+    110  fba0		       05 02 ed 	      brclr	2,PTC,subRoutine
+    111  fba3		       06 01 ed 	      brset	3,PTB,frontLoop
+    112  fba6		       07 02 e7 	      brclr	3,PTC,subRoutine
+    113  fba9		       08 01 e7 	      brset	4,PTB,frontLoop
+    114  fbac		       09 02 e1 	      brclr	4,PTC,subRoutine
+    115  fbaf		       0a 01 e1 	      brset	5,PTB,frontLoop
+    116  fbb2		       0b 02 db 	      brclr	5,PTC,subRoutine
+    117  fbb5		       0c 01 db 	      brset	6,PTB,frontLoop
+    118  fbb8		       0d 02 d5 	      brclr	6,PTC,subRoutine
+    119  fbbb		       0e 01 d5 	      brset	7,PTB,frontLoop
+    120  fbbe		       0f 02 cf 	      brclr	7,PTC,subRoutine
+    121  fbc1
+    122  fbc1				   frontLoop
+    123  fbc1
+    124  fbc1		       10 01		      bset	0,PTB
+    125  fbc3		       11 02		      bclr	0,PTC
+    126  fbc5		       12 01		      bset	1,PTB
+    127  fbc7		       13 02		      bclr	1,PTC
+    128  fbc9		       14 01		      bset	2,PTB
+    129  fbcb		       15 02		      bclr	2,PTC
+    130  fbcd		       16 01		      bset	3,PTB
+    131  fbcf		       17 02		      bclr	3,PTC
+    132  fbd1		       18 01		      bset	4,PTB
+    133  fbd3		       19 02		      bclr	4,PTC
+    134  fbd5		       1a 01		      bset	5,PTB
+    135  fbd7		       1b 02		      bclr	5,PTC
+    136  fbd9		       1c 01		      bset	6,PTB
+    137  fbdb		       1d 02		      bclr	6,PTC
+    138  fbdd		       1e 01		      bset	7,PTB
+    139  fbdf		       1f 02		      bclr	7,PTC
+    140  fbe1
+    141  fbe1		       ad ad		      bsr	subRoutine
+    142  fbe3
+    143  fbe3		       41 20 db 	      cbeqA	$20,frontLoop
+    144  fbe6		       31 09 d8 	      cbeq	9,frontLoop
+    145  fbe9		       61 0a d5 	      cbeq	(0xA,X), frontLoop
+    146  fbec		       9e 61 0b d1	      cbeq	[SP+0x0B],frontLoop
+    147  fbf0		       71 cf		      cbeq.ix	0, frontLoop	; must add forced-address-mode extension to get opcode 0x71
+    148  fbf2		       51 40 cc 	      cbeqX	0x40,frontLoop
+    149  fbf5
+    150  fbf5		       98		      clc
+    151  fbf6		       9a		      cli
+    152  fbf7							;frontLoop:
+    153  fbf7
+    154  fbf7		       3f 40		      clr	RAM_START
+    155  fbf9		       6f 03		      clr	3,X
+    156  fbfb		       7f		      clr	,X
+    157  fbfc		       9e 6f 05 	      clr	5,SP
+    158  fbff		       4f		      clrA
+    159  fc00		       8c		      clrH
+    160  fc01		       5f		      clrX
+    161  fc02
+    162  fc02		       a1 06		      cmp	#6
+    163  fc04		       b1 40		      cmp	RAM_START
+    164  fc06		       e1 07		      cmp	7,X
+    165  fc08		       c1 00 00 	      cmp	constant0
+    166  fc0b		       d1 03 00 	      cmp	0x300,X
+    167  fc0e		       f1		      cmp	,X
+    168  fc0f		       9e e1 05 	      cmp	5,SP
+    169  fc12		       9e d1 01 f4	      cmp	500,SP
+    170  fc16
+    171  fc16		       33 40		      com	RAM_START
+    172  fc18		       63 03		      com	3,X
+    173  fc1a		       73		      com	,X
+    174  fc1b		       9e 63 05 	      com	5,SP
+    175  fc1e		       43		      comA
+    176  fc1f		       53		      comX
+    177  fc20
+    178  fc20		       75 40		      cpHX	RAM_START
+    179  fc22		       65 00 00 	      cpHX	#constant0
+    180  fc25
+    181  fc25		       a3 06		      cpX	#6
+    182  fc27		       b3 40		      cpX	RAM_START
+    183  fc29		       e3 07		      cpX	7,X
+    184  fc2b		       c3 00 00 	      cpX	constant0
+    185  fc2e		       d3 03 00 	      cpX	0x300,X
+    186  fc31		       f3		      cpX	,X
+    187  fc32		       9e e3 05 	      cpX	5,SP
+    188  fc35		       9e d3 01 f4	      cpX	FIVE_HUNDRED,SP
+    189  fc39
+    190  fc39		       72		      daa		; decimal adjust after BCD calculation
+    191  fc3a
+    192  fc3a				   backLoop
+    193  fc3a		       4b fe		      dbnzA	backLoop
+    194  fc3c		       3b 04 fb 	      dbnz	4,backLoop
+    195  fc3f		       6b 05 f8 	      dbnz	[X+5],backLoop
+    196  fc42		       9e 6b 06 f4	      dbnz	[SP+6],backLoop
+    197  fc46		       7b f2		      dbnz.ix	0,backLoop	; must add forced-address-mode extension and dummy 0 to get opcode 0x7B
+    198  fc48		       5b f0		      dbnzX	backLoop
+    199  fc4a
+    200  fc4a		       3a 40		      dec	RAM_START
+    201  fc4c		       6a 03		      dec	3,X
+    202  fc4e		       7a		      dec	,X
+    203  fc4f		       9e 6a 05 	      dec	5,SP
+    204  fc52		       4a		      decA
+    205  fc53		       5a		      decX
+    206  fc54
+    207  fc54		       52		      div
+    208  fc55
+    209  fc55		       42		      mul
+    210  fc56		       62		      nsa
+    211  fc57		       93 e1		      ble	backLoop
+    212  fc59		       92 df		      bgt	backLoop
+    213  fc5b		       91 dd		      blt	backLoop
+    214  fc5d		       90 db		      bge	backLoop
+    215  fc5f		       8f		      wait
+    216  fc60		       8e		      stop
+    217  fc61
+    218  fc61		       a8 06		      eor	#6
+    219  fc63		       b8 40		      eor	RAM_START
+    220  fc65		       e8 07		      eor	7,X
+    221  fc67		       c8 00 00 	      eor	constant0
+    222  fc6a		       d8 03 00 	      eor	0x300,X
+    223  fc6d		       f8		      eor	,X
+    224  fc6e		       9e e8 05 	      eor	5,SP
+    225  fc71		       9e d8 01 f4	      eor	500,SP
+    226  fc75
+    227  fc75		       3c 40		      inc	RAM_START
+    228  fc77		       6c 03		      inc	3,X
+    229  fc79		       7c		      inc	,X
+    230  fc7a		       9e 6c 05 	      inc	5,SP
+    231  fc7d		       4c		      incA
+    232  fc7e		       5c		      incX
+    233  fc7f
+    234  fc7f		       bc 40		      jmp	RAM_START
+    235  fc81		       cc 00 00 	      jmp	vector0
+    236  fc84		       ec 03		      jmp	3,X
+    237  fc86		       dc 03 00 	      jmp	$300,X
+    238  fc89		       fc		      jmp	,X
+    239  fc8a
+    240  fc8a		       bd 40		      jsr	RAM_START
+    241  fc8c		       cd 00 00 	      jsr	vector0
+    242  fc8f		       ed 03		      jsr	3,X
+    243  fc91		       dd 03 00 	      jsr	0x300,X
+    244  fc94		       fd		      jsr	,X
+    245  fc95
+    246  fc95		       a6 06		      ldA	#6
+    247  fc97		       b6 40		      ldA	RAM_START
+    248  fc99		       e6 07		      ldA	7,X
+    249  fc9b		       c6 00 00 	      ldA	constant0
+    250  fc9e		       d6 03 00 	      ldA	0x300,X
+    251  fca1		       f6		      ldA	,X
+    252  fca2		       9e e6 05 	      ldA	5,SP
+    253  fca5		       9e d6 01 f4	      ldA	500,SP
+    254  fca9
+    255  fca9		       45 01 f4 	      ldHX	#500
+    256  fcac		       55 40		      ldHX	RAM_START
+    257  fcae
+    258  fcae		       ae 37		      ldX	#55
+    259  fcb0		       be 40		      ldX	RAM_START
+    260  fcb2		       ee 07		      ldX	7,X
+    261  fcb4		       ce 00 00 	      ldX	constant0
+    262  fcb7		       de 03 00 	      ldX	0x300,X
+    263  fcba		       fe		      ldX	,X
+    264  fcbb		       9e ee 05 	      ldX	5,SP
+    265  fcbe		       9e de 01 f4	      ldX	500,SP
+    266  fcc2
+    267  fcc2		       38 40		      lsl	RAM_START
+    268  fcc4		       68 03		      lsl	3,X
+    269  fcc6		       78		      lsl	,X
+    270  fcc7		       9e 68 05 	      lsl	5,SP
+    271  fcca		       48		      lslA
+    272  fccb		       58		      lslX
+    273  fccc
+    274  fccc		       34 40		      lsr	RAM_START
+    275  fcce		       64 03		      lsr	3,X
+    276  fcd0		       74		      lsr	,X
+    277  fcd1		       9e 64 05 	      lsr	5,SP
+    278  fcd4		       44		      lsrA
+    279  fcd5		       54		      lsrX
+    280  fcd6
+    281  fcd6
+    282  fcd6		       6e 05 40 	      mov	#5, RAM_START
+    283  fcd9		       5e 40		      movp	RAM_START,X
+    284  fcdb		       4e 0a 40 	      mov	10, RAM_START
+    285  fcde		       7e 40		      xmov	RAM_START
+    286  fce0
+    287  fce0		       30 40		      neg	RAM_START
+    288  fce2		       60 03		      neg	3,X
+    289  fce4		       70		      neg	,X
+    290  fce5		       9e 60 05 	      neg	5,SP
+    291  fce8		       40		      negA
+    292  fce9		       50		      negX
+    293  fcea
+    294  fcea		       9d		      nop
+    295  fceb
+    296  fceb		       aa 06		      orA	#6
+    297  fced		       ba 40		      orA	RAM_START
+    298  fcef		       ea 07		      orA	7,X
+    299  fcf1		       ca 00 00 	      orA	constant0
+    300  fcf4		       da 03 00 	      orA	0x300,X
+    301  fcf7		       fa		      orA	,X
+    302  fcf8		       9e ea 05 	      orA	5,SP
+    303  fcfb		       9e da 01 f4	      orA	500,SP
+    304  fcff
+    305  fcff		       87		      pshA
+    306  fd00		       8b		      pshH
+    307  fd01		       89		      pshX
+    308  fd02		       86		      pulA
+    309  fd03		       8a		      pulH
+    310  fd04		       88		      pulX
+    311  fd05
+    312  fd05		       39 40		      rol	RAM_START
+    313  fd07		       69 03		      rol	3,X
+    314  fd09		       79		      rol	,X
+    315  fd0a		       9e 69 05 	      rol	5,SP
+    316  fd0d		       49		      rolA
+    317  fd0e		       59		      rolX
+    318  fd0f
+    319  fd0f		       36 40		      ror	RAM_START
+    320  fd11		       66 03		      ror	3,X
+    321  fd13		       76		      ror	,X
+    322  fd14		       9e 66 05 	      ror	5,SP
+    323  fd17		       46		      rorA
+    324  fd18		       56		      rorX
+    325  fd19
+    326  fd19		       9c		      rsp
+    327  fd1a
+    328  fd1a				   dummyISR
+    329  fd1a		       80		      rti
+    330  fd1b
+    331  fd1b		       a2 06		      sbc	#6
+    332  fd1d		       b2 40		      sbc	RAM_START
+    333  fd1f		       e2 07		      sbc	7,X
+    334  fd21		       c2 00 00 	      sbc	constant0
+    335  fd24		       d2 03 00 	      sbc	0x300,X
+    336  fd27		       f2		      sbc	,X
+    337  fd28		       9e e2 05 	      sbc	5,SP
+    338  fd2b		       9e d2 01 f4	      sbc	500,SP
+    339  fd2f
+    340  fd2f		       99		      sec
+    341  fd30		       9b		      sei
+    342  fd31
+    343  fd31		       b7 40		      stA	RAM_START
+    344  fd33		       e7 07		      stA	7,X
+    345  fd35		       c7 00 00 	      stA	constant0
+    346  fd38		       d7 03 00 	      stA	0x300,X
+    347  fd3b		       f7		      stA	,X
+    348  fd3c		       9e e7 05 	      stA	5,SP
+    349  fd3f		       9e d7 01 f4	      stA	500,SP
+    350  fd43
+    351  fd43		       35 40		      stHX	RAM_START
+    352  fd45
+    353  fd45		       bf 40		      stX	RAM_START
+    354  fd47		       ef 07		      stX	7,X
+    355  fd49		       cf 00 00 	      stX	constant0
+    356  fd4c		       df 03 00 	      stX	0x300,X
+    357  fd4f		       ff		      stX	,X
+    358  fd50		       9e ef 05 	      stX	5,SP
+    359  fd53		       9e df 01 f4	      stX	500,SP
+    360  fd57
+    361  fd57		       a0 06		      sub	#6
+    362  fd59		       b0 40		      sub	RAM_START
+    363  fd5b		       e0 07		      sub	7,X
+    364  fd5d		       c0 00 00 	      sub	constant0
+    365  fd60		       d0 03 00 	      sub	0x300,X
+    366  fd63		       f0		      sub	,X
+    367  fd64		       9e e0 05 	      sub	5,SP
+    368  fd67		       9e d0 01 f4	      sub	500,SP
+    369  fd6b
+    370  fd6b		       83		      swi
+    371  fd6c		       84		      tAP
+    372  fd6d		       97		      tAX
+    373  fd6e		       94		      tHXS
+    374  fd6f		       85		      tPA
+    375  fd70		       95		      tSHX
+    376  fd71
+    377  fd71		       3d 40		      tst	RAM_START
+    378  fd73		       6d 03		      tst	3,X
+    379  fd75		       7d		      tst	,X
+    380  fd76		       9e 6d 04 	      tst	4,SP
+    381  fd79
+    382  fd79		       4d		      tstA
+    383  fd7a		       5d		      tstX
+    384  fd7b		       9f		      tXA
+    385  fd7c
+    386  fd7c							;	.ORG		0xFE00
+    387  fd7c				   constant0
+    388  fd7c		       00 00		      .word.w	0
+    389  fd7e				   vector0
+    390  fd7e		       fd 1a		      .word.w	dummyISR
+    391  fd80
+    392  fd80
+------- FILE suite68hc908.asm LEVEL 1 PASS 2
+      1  fd80 ????						;
+      2  fd80 ????						;   regression test for all opcodes for 68hc908 controller
+      3  fd80 ????						;
+      4  fd80 ????						;   two opcodes with indirect X adressing and zero offset are not cleanly supported
+      5  fd80 ????						;	dbnz		(X), jumpLabel
+      6  fd80 ????						;	cbeq		(X), jumpLabel
+      7  fd80 ????						;
+      8  fd80 ????						;    one must add forced-address-mode extension ".ix" to the mnemonic and add a dummy variable
+      9  fd80 ????						;    in order to get the correct opcodes
+     10  fd80 ????						;	dbnz.ix		0, jumpLabel
+     11  fd80 ????						;	cbeq.ix		0, jumpLabel
+     12  fd80 ????						;
+     13  fd80 ????
+     14  fd80 ????				      .PROCESSOR	68hc908
+     15  fd80 ????
+     16  fd80 ????	       00 01	   PTB	      .EQU	1
+     17  fd80 ????	       00 02	   PTC	      .EQU	2
+     18  fd80 ????	       00 05	   DDRB       .EQU	5
+     19  fd80 ????
+     20  fd80 ????	       00 05	   FIVE       .EQU	5
+     21  fd80 ????	       01 f4	   FIVE_HUNDRED .EQU	500
+     22  fd80 ????
+     23  fd80 ????	       00 40	   RAM_START  .EQU	0x40
+     24  fd80 ????
+     25  fb00					      .ORG	0xFB00
+     26  fb00
+     27  fb00		       ba dc 0d e0	      .byte.b	0xba,0xdc,0x0d,0xe0
+     28  fb04
+     29  fb04		       a9 06		      adc	#6
+     30  fb06		       b9 40		      adc	RAM_START
+     31  fb08		       e9 07		      adc	[X+7]
+     32  fb0a		       c9 fd 7c 	      adc	constant0
+     33  fb0d		       d9 03 00 	      adc	[X+0x300]
+     34  fb10		       f9		      adc	,X
+     35  fb11		       9e e9 05 	      adc	[SP+5]
+     36  fb14		       9e d9 01 f4	      adc	[SP+500]
+     37  fb18
+     38  fb18		       ab 06		      add	#6
+     39  fb1a		       bb 40		      add	RAM_START
+     40  fb1c		       eb 07		      add	7,X
+     41  fb1e		       cb fd 7c 	      add	constant0
+     42  fb21		       db 03 00 	      add	0x300,X
+     43  fb24		       fb		      add	,X
+     44  fb25		       9e eb 05 	      add	FIVE,SP
+     45  fb28		       9e db 01 f4	      add	[SP+FIVE_HUNDRED]
+     46  fb2c
+     47  fb2c		       a7 05		      aiS	#5
+     48  fb2e		       af 06		      aiX	#6
+     49  fb30
+     50  fb30		       a4 06		      and	#6
+     51  fb32		       b4 40		      and	RAM_START
+     52  fb34		       e4 07		      and	7,X
+     53  fb36		       c4 fd 7c 	      and	constant0
+     54  fb39		       d4 03 00 	      and	[X+0x300]
+     55  fb3c		       f4		      and	,X
+     56  fb3d		       9e e4 05 	      and	5,SP
+     57  fb40		       9e d4 01 f4	      and	FIVE_HUNDRED,SP
+     58  fb44
+     59  fb44		       38 40		      asl	RAM_START
+     60  fb46		       68 03		      asl	3,X
+     61  fb48		       78		      asl	,X
+     62  fb49		       9e 68 05 	      asl	5,SP
+     63  fb4c		       48		      aslA
+     64  fb4d		       58		      aslX
+     65  fb4e
+     66  fb4e		       37 40		      asr	RAM_START
+     67  fb50		       67 03		      asr	3,X
+     68  fb52		       77		      asr	,X
+     69  fb53		       9e 67 05 	      asr	5,SP
+     70  fb56		       47		      asrA
+     71  fb57		       57		      asrX
+     72  fb58
+     73  fb58		       24 67		      bcc	frontLoop
+     74  fb5a		       25 65		      bcs	frontLoop
+     75  fb5c		       27 63		      beq	frontLoop
+     76  fb5e		       28 61		      bhcc	frontLoop
+     77  fb60		       29 5f		      bhcs	frontLoop
+     78  fb62		       22 5d		      bhi	frontLoop
+     79  fb64		       24 5b		      bhs	frontLoop
+     80  fb66		       2f 59		      bih	frontLoop
+     81  fb68		       2e 57		      bil	frontLoop
+     82  fb6a
+     83  fb6a		       a5 06		      bit	#6
+     84  fb6c		       b5 40		      bit	RAM_START
+     85  fb6e		       e5 07		      bit	7,X
+     86  fb70		       c5 fd 7c 	      bit	constant0
+     87  fb73		       d5 03 00 	      bit	0x300,X
+     88  fb76		       f5		      bit	,X
+     89  fb77		       9e e5 05 	      bit	5,SP
+     90  fb7a		       9e d5 01 f4	      bit	500,SP
+     91  fb7e
+     92  fb7e		       25 41		      blo	frontLoop
+     93  fb80		       23 3f		      bls	frontLoop
+     94  fb82		       2c 3d		      bmc	frontLoop
+     95  fb84		       2b 3b		      bmi	frontLoop
+     96  fb86		       2d 39		      bms	frontLoop
+     97  fb88		       26 37		      bne	frontLoop
+     98  fb8a		       2a 35		      bpl	frontLoop
+     99  fb8c		       20 33		      bra	frontLoop
+    100  fb8e		       21 31		      brn	frontLoop
+    101  fb90
+    102  fb90				   subRoutine
+    103  fb90		       81		      rts
+    104  fb91
+    105  fb91		       00 01 2d 	      brset	0,PTB,frontLoop
+    106  fb94		       01 02 f9 	      brclr	0,PTC,subRoutine
+    107  fb97		       02 01 27 	      brset	1,PTB,frontLoop
+    108  fb9a		       03 02 f3 	      brclr	1,PTC,subRoutine
+    109  fb9d		       04 01 21 	      brset	2,PTB,frontLoop
+    110  fba0		       05 02 ed 	      brclr	2,PTC,subRoutine
+    111  fba3		       06 01 1b 	      brset	3,PTB,frontLoop
+    112  fba6		       07 02 e7 	      brclr	3,PTC,subRoutine
+    113  fba9		       08 01 15 	      brset	4,PTB,frontLoop
+    114  fbac		       09 02 e1 	      brclr	4,PTC,subRoutine
+    115  fbaf		       0a 01 0f 	      brset	5,PTB,frontLoop
+    116  fbb2		       0b 02 db 	      brclr	5,PTC,subRoutine
+    117  fbb5		       0c 01 09 	      brset	6,PTB,frontLoop
+    118  fbb8		       0d 02 d5 	      brclr	6,PTC,subRoutine
+    119  fbbb		       0e 01 03 	      brset	7,PTB,frontLoop
+    120  fbbe		       0f 02 cf 	      brclr	7,PTC,subRoutine
+    121  fbc1
+    122  fbc1				   frontLoop
+    123  fbc1
+    124  fbc1		       10 01		      bset	0,PTB
+    125  fbc3		       11 02		      bclr	0,PTC
+    126  fbc5		       12 01		      bset	1,PTB
+    127  fbc7		       13 02		      bclr	1,PTC
+    128  fbc9		       14 01		      bset	2,PTB
+    129  fbcb		       15 02		      bclr	2,PTC
+    130  fbcd		       16 01		      bset	3,PTB
+    131  fbcf		       17 02		      bclr	3,PTC
+    132  fbd1		       18 01		      bset	4,PTB
+    133  fbd3		       19 02		      bclr	4,PTC
+    134  fbd5		       1a 01		      bset	5,PTB
+    135  fbd7		       1b 02		      bclr	5,PTC
+    136  fbd9		       1c 01		      bset	6,PTB
+    137  fbdb		       1d 02		      bclr	6,PTC
+    138  fbdd		       1e 01		      bset	7,PTB
+    139  fbdf		       1f 02		      bclr	7,PTC
+    140  fbe1
+    141  fbe1		       ad ad		      bsr	subRoutine
+    142  fbe3
+    143  fbe3		       41 20 db 	      cbeqA	$20,frontLoop
+    144  fbe6		       31 09 d8 	      cbeq	9,frontLoop
+    145  fbe9		       61 0a d5 	      cbeq	(0xA,X), frontLoop
+    146  fbec		       9e 61 0b d1	      cbeq	[SP+0x0B],frontLoop
+    147  fbf0		       71 cf		      cbeq.ix	0, frontLoop	; must add forced-address-mode extension to get opcode 0x71
+    148  fbf2		       51 40 cc 	      cbeqX	0x40,frontLoop
+    149  fbf5
+    150  fbf5		       98		      clc
+    151  fbf6		       9a		      cli
+    152  fbf7							;frontLoop:
+    153  fbf7
+    154  fbf7		       3f 40		      clr	RAM_START
+    155  fbf9		       6f 03		      clr	3,X
+    156  fbfb		       7f		      clr	,X
+    157  fbfc		       9e 6f 05 	      clr	5,SP
+    158  fbff		       4f		      clrA
+    159  fc00		       8c		      clrH
+    160  fc01		       5f		      clrX
+    161  fc02
+    162  fc02		       a1 06		      cmp	#6
+    163  fc04		       b1 40		      cmp	RAM_START
+    164  fc06		       e1 07		      cmp	7,X
+    165  fc08		       c1 fd 7c 	      cmp	constant0
+    166  fc0b		       d1 03 00 	      cmp	0x300,X
+    167  fc0e		       f1		      cmp	,X
+    168  fc0f		       9e e1 05 	      cmp	5,SP
+    169  fc12		       9e d1 01 f4	      cmp	500,SP
+    170  fc16
+    171  fc16		       33 40		      com	RAM_START
+    172  fc18		       63 03		      com	3,X
+    173  fc1a		       73		      com	,X
+    174  fc1b		       9e 63 05 	      com	5,SP
+    175  fc1e		       43		      comA
+    176  fc1f		       53		      comX
+    177  fc20
+    178  fc20		       75 40		      cpHX	RAM_START
+    179  fc22		       65 fd 7c 	      cpHX	#constant0
+    180  fc25
+    181  fc25		       a3 06		      cpX	#6
+    182  fc27		       b3 40		      cpX	RAM_START
+    183  fc29		       e3 07		      cpX	7,X
+    184  fc2b		       c3 fd 7c 	      cpX	constant0
+    185  fc2e		       d3 03 00 	      cpX	0x300,X
+    186  fc31		       f3		      cpX	,X
+    187  fc32		       9e e3 05 	      cpX	5,SP
+    188  fc35		       9e d3 01 f4	      cpX	FIVE_HUNDRED,SP
+    189  fc39
+    190  fc39		       72		      daa		; decimal adjust after BCD calculation
+    191  fc3a
+    192  fc3a				   backLoop
+    193  fc3a		       4b fe		      dbnzA	backLoop
+    194  fc3c		       3b 04 fb 	      dbnz	4,backLoop
+    195  fc3f		       6b 05 f8 	      dbnz	[X+5],backLoop
+    196  fc42		       9e 6b 06 f4	      dbnz	[SP+6],backLoop
+    197  fc46		       7b f2		      dbnz.ix	0,backLoop	; must add forced-address-mode extension and dummy 0 to get opcode 0x7B
+    198  fc48		       5b f0		      dbnzX	backLoop
+    199  fc4a
+    200  fc4a		       3a 40		      dec	RAM_START
+    201  fc4c		       6a 03		      dec	3,X
+    202  fc4e		       7a		      dec	,X
+    203  fc4f		       9e 6a 05 	      dec	5,SP
+    204  fc52		       4a		      decA
+    205  fc53		       5a		      decX
+    206  fc54
+    207  fc54		       52		      div
+    208  fc55
+    209  fc55		       42		      mul
+    210  fc56		       62		      nsa
+    211  fc57		       93 e1		      ble	backLoop
+    212  fc59		       92 df		      bgt	backLoop
+    213  fc5b		       91 dd		      blt	backLoop
+    214  fc5d		       90 db		      bge	backLoop
+    215  fc5f		       8f		      wait
+    216  fc60		       8e		      stop
+    217  fc61
+    218  fc61		       a8 06		      eor	#6
+    219  fc63		       b8 40		      eor	RAM_START
+    220  fc65		       e8 07		      eor	7,X
+    221  fc67		       c8 fd 7c 	      eor	constant0
+    222  fc6a		       d8 03 00 	      eor	0x300,X
+    223  fc6d		       f8		      eor	,X
+    224  fc6e		       9e e8 05 	      eor	5,SP
+    225  fc71		       9e d8 01 f4	      eor	500,SP
+    226  fc75
+    227  fc75		       3c 40		      inc	RAM_START
+    228  fc77		       6c 03		      inc	3,X
+    229  fc79		       7c		      inc	,X
+    230  fc7a		       9e 6c 05 	      inc	5,SP
+    231  fc7d		       4c		      incA
+    232  fc7e		       5c		      incX
+    233  fc7f
+    234  fc7f		       bc 40		      jmp	RAM_START
+    235  fc81		       cc fd 7e 	      jmp	vector0
+    236  fc84		       ec 03		      jmp	3,X
+    237  fc86		       dc 03 00 	      jmp	$300,X
+    238  fc89		       fc		      jmp	,X
+    239  fc8a
+    240  fc8a		       bd 40		      jsr	RAM_START
+    241  fc8c		       cd fd 7e 	      jsr	vector0
+    242  fc8f		       ed 03		      jsr	3,X
+    243  fc91		       dd 03 00 	      jsr	0x300,X
+    244  fc94		       fd		      jsr	,X
+    245  fc95
+    246  fc95		       a6 06		      ldA	#6
+    247  fc97		       b6 40		      ldA	RAM_START
+    248  fc99		       e6 07		      ldA	7,X
+    249  fc9b		       c6 fd 7c 	      ldA	constant0
+    250  fc9e		       d6 03 00 	      ldA	0x300,X
+    251  fca1		       f6		      ldA	,X
+    252  fca2		       9e e6 05 	      ldA	5,SP
+    253  fca5		       9e d6 01 f4	      ldA	500,SP
+    254  fca9
+    255  fca9		       45 01 f4 	      ldHX	#500
+    256  fcac		       55 40		      ldHX	RAM_START
+    257  fcae
+    258  fcae		       ae 37		      ldX	#55
+    259  fcb0		       be 40		      ldX	RAM_START
+    260  fcb2		       ee 07		      ldX	7,X
+    261  fcb4		       ce fd 7c 	      ldX	constant0
+    262  fcb7		       de 03 00 	      ldX	0x300,X
+    263  fcba		       fe		      ldX	,X
+    264  fcbb		       9e ee 05 	      ldX	5,SP
+    265  fcbe		       9e de 01 f4	      ldX	500,SP
+    266  fcc2
+    267  fcc2		       38 40		      lsl	RAM_START
+    268  fcc4		       68 03		      lsl	3,X
+    269  fcc6		       78		      lsl	,X
+    270  fcc7		       9e 68 05 	      lsl	5,SP
+    271  fcca		       48		      lslA
+    272  fccb		       58		      lslX
+    273  fccc
+    274  fccc		       34 40		      lsr	RAM_START
+    275  fcce		       64 03		      lsr	3,X
+    276  fcd0		       74		      lsr	,X
+    277  fcd1		       9e 64 05 	      lsr	5,SP
+    278  fcd4		       44		      lsrA
+    279  fcd5		       54		      lsrX
+    280  fcd6
+    281  fcd6
+    282  fcd6		       6e 05 40 	      mov	#5, RAM_START
+    283  fcd9		       5e 40		      movp	RAM_START,X
+    284  fcdb		       4e 0a 40 	      mov	10, RAM_START
+    285  fcde		       7e 40		      xmov	RAM_START
+    286  fce0
+    287  fce0		       30 40		      neg	RAM_START
+    288  fce2		       60 03		      neg	3,X
+    289  fce4		       70		      neg	,X
+    290  fce5		       9e 60 05 	      neg	5,SP
+    291  fce8		       40		      negA
+    292  fce9		       50		      negX
+    293  fcea
+    294  fcea		       9d		      nop
+    295  fceb
+    296  fceb		       aa 06		      orA	#6
+    297  fced		       ba 40		      orA	RAM_START
+    298  fcef		       ea 07		      orA	7,X
+    299  fcf1		       ca fd 7c 	      orA	constant0
+    300  fcf4		       da 03 00 	      orA	0x300,X
+    301  fcf7		       fa		      orA	,X
+    302  fcf8		       9e ea 05 	      orA	5,SP
+    303  fcfb		       9e da 01 f4	      orA	500,SP
+    304  fcff
+    305  fcff		       87		      pshA
+    306  fd00		       8b		      pshH
+    307  fd01		       89		      pshX
+    308  fd02		       86		      pulA
+    309  fd03		       8a		      pulH
+    310  fd04		       88		      pulX
+    311  fd05
+    312  fd05		       39 40		      rol	RAM_START
+    313  fd07		       69 03		      rol	3,X
+    314  fd09		       79		      rol	,X
+    315  fd0a		       9e 69 05 	      rol	5,SP
+    316  fd0d		       49		      rolA
+    317  fd0e		       59		      rolX
+    318  fd0f
+    319  fd0f		       36 40		      ror	RAM_START
+    320  fd11		       66 03		      ror	3,X
+    321  fd13		       76		      ror	,X
+    322  fd14		       9e 66 05 	      ror	5,SP
+    323  fd17		       46		      rorA
+    324  fd18		       56		      rorX
+    325  fd19
+    326  fd19		       9c		      rsp
+    327  fd1a
+    328  fd1a				   dummyISR
+    329  fd1a		       80		      rti
+    330  fd1b
+    331  fd1b		       a2 06		      sbc	#6
+    332  fd1d		       b2 40		      sbc	RAM_START
+    333  fd1f		       e2 07		      sbc	7,X
+    334  fd21		       c2 fd 7c 	      sbc	constant0
+    335  fd24		       d2 03 00 	      sbc	0x300,X
+    336  fd27		       f2		      sbc	,X
+    337  fd28		       9e e2 05 	      sbc	5,SP
+    338  fd2b		       9e d2 01 f4	      sbc	500,SP
+    339  fd2f
+    340  fd2f		       99		      sec
+    341  fd30		       9b		      sei
+    342  fd31
+    343  fd31		       b7 40		      stA	RAM_START
+    344  fd33		       e7 07		      stA	7,X
+    345  fd35		       c7 fd 7c 	      stA	constant0
+    346  fd38		       d7 03 00 	      stA	0x300,X
+    347  fd3b		       f7		      stA	,X
+    348  fd3c		       9e e7 05 	      stA	5,SP
+    349  fd3f		       9e d7 01 f4	      stA	500,SP
+    350  fd43
+    351  fd43		       35 40		      stHX	RAM_START
+    352  fd45
+    353  fd45		       bf 40		      stX	RAM_START
+    354  fd47		       ef 07		      stX	7,X
+    355  fd49		       cf fd 7c 	      stX	constant0
+    356  fd4c		       df 03 00 	      stX	0x300,X
+    357  fd4f		       ff		      stX	,X
+    358  fd50		       9e ef 05 	      stX	5,SP
+    359  fd53		       9e df 01 f4	      stX	500,SP
+    360  fd57
+    361  fd57		       a0 06		      sub	#6
+    362  fd59		       b0 40		      sub	RAM_START
+    363  fd5b		       e0 07		      sub	7,X
+    364  fd5d		       c0 fd 7c 	      sub	constant0
+    365  fd60		       d0 03 00 	      sub	0x300,X
+    366  fd63		       f0		      sub	,X
+    367  fd64		       9e e0 05 	      sub	5,SP
+    368  fd67		       9e d0 01 f4	      sub	500,SP
+    369  fd6b
+    370  fd6b		       83		      swi
+    371  fd6c		       84		      tAP
+    372  fd6d		       97		      tAX
+    373  fd6e		       94		      tHXS
+    374  fd6f		       85		      tPA
+    375  fd70		       95		      tSHX
+    376  fd71
+    377  fd71		       3d 40		      tst	RAM_START
+    378  fd73		       6d 03		      tst	3,X
+    379  fd75		       7d		      tst	,X
+    380  fd76		       9e 6d 04 	      tst	4,SP
+    381  fd79
+    382  fd79		       4d		      tstA
+    383  fd7a		       5d		      tstX
+    384  fd7b		       9f		      tXA
+    385  fd7c
+    386  fd7c							;	.ORG		0xFE00
+    387  fd7c				   constant0
+    388  fd7c		       00 00		      .word.w	0
+    389  fd7e				   vector0
+    390  fd7e		       fd 1a		      .word.w	dummyISR
+    391  fd80
+    392  fd80

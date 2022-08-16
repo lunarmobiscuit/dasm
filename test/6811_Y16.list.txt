@@ -1,0 +1,7 @@
+------- FILE 6811_Y16.asm LEVEL 1 PASS 1
+      1  0000					      .PROCESSOR	68hc11
+      2  0000					      .ORG	0
+      3  0000
+6811_Y16.asm (4): error: Value in 'anda 500,Y' must be <$100.
+      4  0000		       18 a4 f4 	      anda	500,Y	; word offset is not allowed with this mnemonic
+      5  0003

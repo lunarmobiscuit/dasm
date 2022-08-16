@@ -1,0 +1,197 @@
+------- FILE lockup_macro.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .PROCESSOR	68908
+      3  0000 ????
+      4  0000 ????				      .macro	fw_delay
+      5  0000 ????				      ldx	#{1}	;[2]
+      6  0000 ????				      lda	#{2}	;[2]
+      7  0000 ????				      jsr	MoniRomDelayLoop	;[5]
+      8  0000 ????				      .endm
+      9  0000 ????
+     10  0000 ????				      .macro	declare_delay
+     11  0000 ????			   Delay{1}
+     12  0000 ????				      fw_delay	{2},{3}
+     13  0000 ????				      rts		;[4]
+     14  0000 ????				      .endm
+     15  0000 ????
+     16  0000					      .ORG	0
+     17  0000
+     18  0000		       00 0b 00 ad*	      .word.w	$B,$AD,$C0,$DE
+     19  0008
+      0  0008					      declare_delay	100us,1,40	; 128 cycles,
+      1  0008				   Delay100us
+      0  0008					      fw_delay	1,40
+      1  0008		       ae 01		      ldx	#1
+      2  000a		       a6 28		      lda	#40
+      3  000c		       cd 00 00 	      jsr	MoniRomDelayLoop
+      3  000f		       81		      rts
+     21  0010
+      0  0010					      declare_delay	4ms,7,234	; 4928 cycles,
+      1  0010				   Delay4ms
+      0  0010					      fw_delay	7,234
+      1  0010		       ae 07		      ldx	#7
+      2  0012		       a6 ea		      lda	#234
+      3  0014		       cd 00 00 	      jsr	MoniRomDelayLoop
+      3  0017		       81		      rts
+     23  0018
+     24  0018
+------- FILE file-with-dash.asm LEVEL 2 PASS 1
+      0  0018					      include	"file-with-dash.asm"
+      1  0018
+      2  0018				   MoniRomDelayLoop
+      3  0018		       4a		      deca		; J	 $fd21	 4a
+      4  0019				   _Lfd22
+      5  0019		       87		      psha		; .	 $fd22	 87
+      6  001a		       4a		      deca		; J	 $fd23	 4a
+      7  001b		       4a		      deca		; J	 $fd24	 4a
+      8  001c				   _Lfd25
+      9  001c		       4b fe		      dbnza	_Lfd25	; K.	 $fd25	 4b fe
+     10  001e		       86		      pula		; .	 $fd27	 86
+     11  001f		       5b f8		      dbnzx	_Lfd22	; ..	 $fd28	 5b f8
+     12  0021		       81		      rts		; .	 $fd2a	 81
+     13  0022
+     14  0022
+------- FILE lockup_macro.asm
+     26  0022
+     27  0022
+     28  0022							;MoniRomDelayLoop:
+     29  0022							;	rts
+     30  0022
+     31  0022
+     32  0022
+     33  0022
+     34  0022
+------- FILE lockup_macro.asm LEVEL 1 PASS 2
+      1  0022 ????
+      2  0022 ????				      .PROCESSOR	68908
+      3  0022 ????
+      4  0022 ????				      .macro	fw_delay
+      5  0022 ????				      ldx	#{1}	;[2]
+      6  0022 ????				      lda	#{2}	;[2]
+      7  0022 ????				      jsr	MoniRomDelayLoop	;[5]
+      8  0022 ????				      .endm
+      9  0022 ????
+     10  0022 ????				      .macro	declare_delay
+     11  0022 ????			   Delay{1}
+     12  0022 ????				      fw_delay	{2},{3}
+     13  0022 ????				      rts		;[4]
+     14  0022 ????				      .endm
+     15  0022 ????
+     16  0000					      .ORG	0
+     17  0000
+     18  0000		       00 0b 00 ad*	      .word.w	$B,$AD,$C0,$DE
+     19  0008
+      0  0008					      declare_delay	100us,1,40	; 128 cycles,
+      1  0008				   Delay100us
+      0  0008					      fw_delay	1,40
+      1  0008		       ae 01		      ldx	#1
+      2  000a		       a6 28		      lda	#40
+      3  000c		       bd 18		      jsr	MoniRomDelayLoop
+      3  000e		       81		      rts
+     21  000f
+      0  000f					      declare_delay	4ms,7,234	; 4928 cycles,
+lockup_macro.asm (22): error: Label mismatch...
+ --> Delay4ms 0010                  
+      1  000f				   Delay4ms
+      0  000f					      fw_delay	7,234
+      1  000f		       ae 07		      ldx	#7
+      2  0011		       a6 ea		      lda	#234
+      3  0013		       bd 18		      jsr	MoniRomDelayLoop
+      3  0015		       81		      rts
+     23  0016
+     24  0016
+------- FILE file-with-dash.asm LEVEL 2 PASS 2
+      0  0016					      include	"file-with-dash.asm"
+      1  0016
+file-with-dash.asm (2): error: Label mismatch...
+ --> MoniRomDelayLoop 0018                  
+      2  0016				   MoniRomDelayLoop
+      3  0016		       4a		      deca		; J	 $fd21	 4a
+file-with-dash.asm (4): error: Label mismatch...
+ --> _Lfd22 0019                  
+      4  0017				   _Lfd22
+      5  0017		       87		      psha		; .	 $fd22	 87
+      6  0018		       4a		      deca		; J	 $fd23	 4a
+      7  0019		       4a		      deca		; J	 $fd24	 4a
+file-with-dash.asm (8): error: Label mismatch...
+ --> _Lfd25 001c                  
+      8  001a				   _Lfd25
+      9  001a		       4b fe		      dbnza	_Lfd25	; K.	 $fd25	 4b fe
+     10  001c		       86		      pula		; .	 $fd27	 86
+     11  001d		       5b f8		      dbnzx	_Lfd22	; ..	 $fd28	 5b f8
+     12  001f		       81		      rts		; .	 $fd2a	 81
+     13  0020
+     14  0020
+------- FILE lockup_macro.asm
+     26  0020
+     27  0020
+     28  0020							;MoniRomDelayLoop:
+     29  0020							;	rts
+     30  0020
+     31  0020
+     32  0020
+     33  0020
+     34  0020
+------- FILE lockup_macro.asm LEVEL 1 PASS 3
+      1  0020 ????
+      2  0020 ????				      .PROCESSOR	68908
+      3  0020 ????
+      4  0020 ????				      .macro	fw_delay
+      5  0020 ????				      ldx	#{1}	;[2]
+      6  0020 ????				      lda	#{2}	;[2]
+      7  0020 ????				      jsr	MoniRomDelayLoop	;[5]
+      8  0020 ????				      .endm
+      9  0020 ????
+     10  0020 ????				      .macro	declare_delay
+     11  0020 ????			   Delay{1}
+     12  0020 ????				      fw_delay	{2},{3}
+     13  0020 ????				      rts		;[4]
+     14  0020 ????				      .endm
+     15  0020 ????
+     16  0000					      .ORG	0
+     17  0000
+     18  0000		       00 0b 00 ad*	      .word.w	$B,$AD,$C0,$DE
+     19  0008
+      0  0008					      declare_delay	100us,1,40	; 128 cycles,
+      1  0008				   Delay100us
+      0  0008					      fw_delay	1,40
+      1  0008		       ae 01		      ldx	#1
+      2  000a		       a6 28		      lda	#40
+      3  000c		       bd 16		      jsr	MoniRomDelayLoop
+      3  000e		       81		      rts
+     21  000f
+      0  000f					      declare_delay	4ms,7,234	; 4928 cycles,
+      1  000f				   Delay4ms
+      0  000f					      fw_delay	7,234
+      1  000f		       ae 07		      ldx	#7
+      2  0011		       a6 ea		      lda	#234
+      3  0013		       bd 16		      jsr	MoniRomDelayLoop
+      3  0015		       81		      rts
+     23  0016
+     24  0016
+------- FILE file-with-dash.asm LEVEL 2 PASS 3
+      0  0016					      include	"file-with-dash.asm"
+      1  0016
+      2  0016				   MoniRomDelayLoop
+      3  0016		       4a		      deca		; J	 $fd21	 4a
+      4  0017				   _Lfd22
+      5  0017		       87		      psha		; .	 $fd22	 87
+      6  0018		       4a		      deca		; J	 $fd23	 4a
+      7  0019		       4a		      deca		; J	 $fd24	 4a
+      8  001a				   _Lfd25
+      9  001a		       4b fe		      dbnza	_Lfd25	; K.	 $fd25	 4b fe
+     10  001c		       86		      pula		; .	 $fd27	 86
+     11  001d		       5b f8		      dbnzx	_Lfd22	; ..	 $fd28	 5b f8
+     12  001f		       81		      rts		; .	 $fd2a	 81
+     13  0020
+     14  0020
+------- FILE lockup_macro.asm
+     26  0020
+     27  0020
+     28  0020							;MoniRomDelayLoop:
+     29  0020							;	rts
+     30  0020
+     31  0020
+     32  0020
+     33  0020
+     34  0020

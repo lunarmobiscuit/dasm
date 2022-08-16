@@ -1,0 +1,4 @@
+
+m_switch_3.asm (11): error: Recursion too deep in code segment growing larger (1030) than max. allowed file size (65)
+
+

@@ -1,0 +1,23 @@
+------- FILE recursive_eqm.asm LEVEL 1 PASS 1
+      1  0000 ????						; segfault
+      2  0000 ????
+      3  0000 ????			   str	      eqm	"BB"
+      4  0000 ????
+      5  0000 ????				      .MAC	strcat
+      6  0000 ????			   strcat_tmp eqm	{1} + {2}
+      7  0000 ????			   {1}	      eqm	strcat_tmp
+      8  0000 ????				      .ENDM		; {symbol},{string_trailer}
+      9  0000 ????
+      0  0000 ????				      strcat	str,"\nAAA"
+      1  0000 ????			   strcat_tmp eqm	str + "\nAAA"
+      2  0000 ????			   str	      eqm	strcat_tmp
+      0  0000 ????				      strcat	str,"\nCC"
+      1  0000 ????			   strcat_tmp eqm	str + "\nCC"
+      2  0000 ????			   str	      eqm	strcat_tmp
+     12  0000 ????
+     13  0000 ????				      .PROCESSOR	6502
+     14  0000 ????
+     15  0000					      .ORG	0
+     16  0000
+recursive_eqm.asm (17): error: Recursion too deep in pushsymbol()
+Aborting assembly

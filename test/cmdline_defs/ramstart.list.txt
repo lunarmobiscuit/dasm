@@ -1,0 +1,13 @@
+------- FILE cmdline_defs/ramstart.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      .PROCESSOR	68HC11
+      3  0000 ????
+      4  0000 ????			  -	      .ifnconst	RAM_START
+      5  0000 ????			  -RAM_START  .EQU	0x80
+      6  0000 ????				      .endif
+      7  0000 ????
+      8  0000					      ORG	0
+      9  0000
+     10  0000		       00 60		      DC.w	RAM_START
+     11  0002
+     12  0002

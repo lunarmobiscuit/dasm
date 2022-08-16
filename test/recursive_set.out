@@ -1,0 +1,4 @@
+
+recursive_set.asm (10): error: Recursion too deep in code segment growing larger (16778240) than max. allowed file size (16777216)
+
+
